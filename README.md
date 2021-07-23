@@ -2,9 +2,6 @@
 
 ## Ready To Use:
 - **Spatie** / Laravel Permission
-
-
-
 - **Dynamic Route Files**
 - **Image Upload Helper** 
 
