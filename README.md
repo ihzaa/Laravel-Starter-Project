@@ -4,6 +4,7 @@
 - **Spatie** / Laravel Permission
 - **Dynamic Route Files**
 - **Image Upload Helper** 
+- **Dynamic Global Method**
 
 ## How To Use:
 1. Clone The Project

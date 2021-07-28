@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('tes',function(){
-    return 'ok';
+    iniTestingAja();
 });
 
 // INI ADALAH CONTOH FILE ROUTE
