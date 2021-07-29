@@ -11,13 +11,17 @@
 2. Add your new project git remote url by following command on terminal in the root of this project:
 ~~~
 git remote rm origin
-git remote add origin YOUR_GIT_REPOSITORY_URL
+git remote add origin "YOUR_GIT_REPOSITORY_URL"
+--------OR---------
+newGit.bat "YOUR_GIT_REPOSITORY_URL"
 ~~~
 3. Open terminal in the root of this project and do following command:
 ~~~
 composer Install
 copy .env.example .env //or just copy the .env.example as .env
 php artisan key:generate
+--------OR----------
+install.sh
 ~~~
 4. Configure the .env file
 5. do `php artisan migrate --seed`
