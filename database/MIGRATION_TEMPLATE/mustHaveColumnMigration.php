@@ -13,21 +13,28 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        // you can add member/customer table one to one relation to this table
-        // if user is an memebr/cutomer, the user must have record in the member/cutomer table
         Schema::create('users', function (Blueprint $table) {
+            // MUST HAVE
             $table->id();
+            // MUST HAVE
+
+            // OPTIONAL
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            // OPTIONAL
+
+            // MUST HAVE
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->unsignedBigInteger('deleted_by');
             $table->softDeletes();
             $table->timestamps();
+            // MUST HAVE
+
         });
     }
 
