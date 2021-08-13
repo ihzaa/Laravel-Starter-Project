@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class PermissionRoleUserSeeder extends Seeder
 {
@@ -17,21 +18,6 @@ class PermissionRoleUserSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions
-        // Permission::create(['name' => 'edit articles']);
-        // Permission::create(['name' => 'delete articles']);
-        // Permission::create(['name' => 'publish articles']);
-        // Permission::create(['name' => 'unpublish articles']);
-
-        // create roles and assign existing permissions
-        // $role1 = Role::create(['name' => 'writer']);
-        // $role1->givePermissionTo('edit articles');
-        // $role1->givePermissionTo('delete articles');
-
-        // $role2 = Role::create(['name' => 'admin']);
-        // $role2->givePermissionTo('publish articles');
-        // $role2->givePermissionTo('unpublish articles');
-
         $role3 = Role::create(['name' => 'Super-Admin']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
         $user = \App\Models\User::factory()->create([
@@ -40,7 +26,21 @@ class PermissionRoleUserSeeder extends Seeder
             'email' => 'superadmin@example.com',
         ]);
         $user->assignRole($role3);
+        // create permissions
+        CreatePermission::create('users');
+
+        // create roles and assign existing permissions
+        $role1 = Role::create(['name' => 'admin']);
+        $role1->givePermissionTo('create users');
+        $role1->givePermissionTo('update users');
+        $role1->givePermissionTo('delete users');
+        $role1->givePermissionTo('view users');
+        $role1->givePermissionTo('restore users');
+
+        CreatePermission::create('permissions');
 
         // In login method check the loged-in user Role
     }
+
+
 }

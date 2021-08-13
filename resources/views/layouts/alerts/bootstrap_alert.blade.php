@@ -5,18 +5,12 @@
         {{ $errors->first() }}
     </div>
 @endif
-@if (session()->has('alert-color'))
-    <div class="alert {{ session()->get('alert-color') }} alert-dismissible fade show" role="alert">
-        @if (session()->get('alert-icon') == 'success')
-            <i class="fas fa-check-circle" aria-hidden="true"></i>
-        @elseif (session()->get('alert-icon') == 'error')
-            <i class="fas fa-times-circle"></i>
-        @elseif (session()->get('alert-icon') == 'info')
-            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+@if (session()->has('alert-class'))
+    <div class="alert {{ session()->get('alert-class') }} alert-dismissible fade show" role="alert">
+        @if (session()->get('alert-icon'))
+            <i class="fas fa-{{session()->get('alert-icon')}}" aria-hidden="true"></i>
         @endif
-        <div>
-            {{ session()->get('alert-text') }}
-        </div>
+        <span class="ml-2">{{ session()->get('alert-text') }}</span>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
