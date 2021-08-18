@@ -15,7 +15,8 @@ use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, CanGetTableNameStatically, UserStamp, SoftDeletes;
+    use HasFactory, Notifiable, HasRoles, CanGetTableNameStatically, UserStamp;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -50,5 +51,22 @@ class User extends Authenticatable
     public function role()
     {
         return $this->hasOne(Role::class, 'model_has_roles', 'model_id', 'role_id');
+    }
+
+    public function createdByUser()
+    {
+        return $this->belongsTo('App\Models\User', 'created_by');
+    }
+    public function updatedByUser()
+    {
+        return $this->belongsTo('App\Models\User', 'updated_by');
+    }
+    public function deletedByUser()
+    {
+        return $this->belongsTo('App\Models\User', 'deleted_by');
+    }
+    public function restoreByUser()
+    {
+        return $this->belongsTo('App\Models\User', 'restored_by');
     }
 }

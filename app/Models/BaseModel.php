@@ -11,8 +11,10 @@ use App\Traits\UserStamp;
 
 class BaseModel extends Model
 {
-    use HasFactory, SoftDeletes, CanGetTableNameStatically, UserStamp;
-
+    use HasFactory,  CanGetTableNameStatically, UserStamp;
+    use SoftDeletes {
+        restore as SoftDeletesRestore;
+    }
     public function createdByUser()
     {
         return $this->belongsTo('App\Models\User', 'created_by');
@@ -24,5 +26,15 @@ class BaseModel extends Model
     public function deletedByUser()
     {
         return $this->belongsTo('App\Models\User', 'deleted_by');
+    }
+    public function restoreByUser()
+    {
+        return $this->belongsTo('App\Models\User', 'restored_by');
+    }
+
+    public function restore()
+    {
+        $this->restore_by = auth()->user()->id;
+        return $this->SoftDeletesRestore();
     }
 }

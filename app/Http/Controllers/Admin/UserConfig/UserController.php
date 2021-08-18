@@ -129,6 +129,7 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $user->assignRole($request->input('role'));
+        $user->save();
 
         FlashMessageHelper::bootstrapAlert([
             'class' => 'alert-success',
@@ -155,8 +156,8 @@ class UserController extends Controller
 
     public function restore($id)
     {
-        User::onlyTrashed()->where('id', $id)->restore();
-        $user = User::find($id);
+        $user = User::onlyTrashed()->where('id', $id)->first();
+        $user->restore();
 
         FlashMessageHelper::bootstrapAlert([
             'class' => 'alert-success',
