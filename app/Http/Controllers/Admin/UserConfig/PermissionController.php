@@ -61,7 +61,7 @@ class PermissionController extends Controller
         $role->name = $request->name;
         $role->syncPermissions($request->input('permission'));
         $role->save();
-        FlashMessageHelper::flash(['class' => 'alert-success', 'icon' => 'pen', 'text' => 'Berhasil merubah perizian ' . $request->name . '!']);
+        FlashMessageHelper::bootstrapAlert(['class' => 'alert-success', 'icon' => 'pen', 'text' => 'Berhasil merubah perizian ' . $request->name . '!']);
 
         return redirect(route('admin.user_config.permission.index'));
     }
@@ -71,7 +71,7 @@ class PermissionController extends Controller
         $role = Role::find($id);
         $name = $role->name;
         $role->delete();
-        FlashMessageHelper::flash(['class' => 'alert-success', 'icon' => 'trash', 'text' => 'Berhasil menghapus perizinan ' . $name . '!']);
+        FlashMessageHelper::bootstrapAlert(['class' => 'alert-success', 'icon' => 'trash', 'text' => 'Berhasil menghapus perizinan ' . $name . '!']);
         return redirect(route('admin.user_config.permission.index'));
     }
 
@@ -103,7 +103,7 @@ class PermissionController extends Controller
         $role->syncPermissions($request->input('permission'));
         $role->save();
 
-        FlashMessageHelper::flash(['class' => 'alert-success', 'icon' => 'plus', 'text' => 'Berhasil menambahkan perizian ' . $request->name . '!']);
+        FlashMessageHelper::bootstrapAlert(['class' => 'alert-success', 'icon' => 'plus', 'text' => 'Berhasil menambahkan perizian ' . $request->name . '!']);
 
         return redirect(route('admin.user_config.permission.index'));
     }

@@ -30,16 +30,16 @@ class LoginController extends Controller
 
         $user = User::whereUsername($request->username)->first();
         if ($user == null) {
-            FlashMessageHelper::flash([
-                'color' => 'alert-danger',
+            FlashMessageHelper::bootstrapAlert([
+                'class' => 'alert-danger',
                 'icon' => 'error',
                 'text' => 'Username atau password salah!'
             ]);
             return back();
         }
         if (!Hash::check($request->password, $user->password)) {
-            FlashMessageHelper::flash([
-                'color' => 'alert-danger',
+            FlashMessageHelper::bootstrapAlert([
+                'class' => 'alert-danger',
                 'icon' => 'error',
                 'text' => 'Username atau password salah!'
             ]);
@@ -48,7 +48,7 @@ class LoginController extends Controller
         $remember = $request->has('remember') ? true : false;
         Auth::loginUsingId($user->id, $remember);
 
-        return view('admin.template.master');
+        return redirect(route('admin.dashboard.index'));
     }
 
     public function logout()

@@ -4,7 +4,7 @@ namespace App\Utils;
 
 class FlashMessageHelper
 {
-    public static function flash($data)
+    public static function bootstrapAlert($data)
     {
         if(isset($data['class']))
         session()->flash('alert-class', $data['class']);

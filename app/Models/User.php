@@ -10,10 +10,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Traits\UserStamp;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, CanGetTableNameStatically, UserStamp;
+    use HasFactory, Notifiable, HasRoles, CanGetTableNameStatically, UserStamp, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -44,4 +46,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->hasOne(Role::class, 'model_has_roles', 'model_id', 'role_id');
+    }
 }
