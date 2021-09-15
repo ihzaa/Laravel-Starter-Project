@@ -17,7 +17,9 @@ function readSubDir($dir, array $subDirs)
                 array_push($dirs, $file);
             }
         };
-        readSubDir($subDir, $dirs);
+        if ($dirs != []) {
+            readSubDir($subDir, $dirs);
+        }
     };
 }
 
@@ -34,5 +36,6 @@ foreach ($files as $k => $file) {
         array_push($dirs, $file);
     }
 };
-
-readSubDir($dir, $dirs);
+if ($dirs != []) {
+    readSubDir($dir, $dirs);
+}
