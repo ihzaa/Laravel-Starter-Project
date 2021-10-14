@@ -9,12 +9,19 @@
 ## How To Use:
 1. Clone The Project
 2. Add your new project git remote url by following command on terminal in the root of this project:
+
+Open terminal by run as admin
 ~~~
 .\newGit.bat "YOUR_GIT_REPOSITORY_URL"
 ~~~
 ---OR---
+
+Delete .git folder in root project
 ~~~
-git remote rm origin
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
 git remote add origin "YOUR_GIT_REPOSITORY_URL"
 ~~~
 
@@ -24,7 +31,7 @@ install.sh
 ~~~
 ---OR ---
 ~~~
-composer Install
+composer install
 copy .env.example .env //or just copy the .env.example as .env
 php artisan key:generate
 ~~~
