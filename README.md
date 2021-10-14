@@ -10,7 +10,7 @@
 1. Clone The Project
 2. Add your new project git remote url by following command on terminal in the root of this project:
 ~~~
-newGit.bat "YOUR_GIT_REPOSITORY_URL"
+.\newGit.bat "YOUR_GIT_REPOSITORY_URL"
 ~~~
 ---OR---
 ~~~
