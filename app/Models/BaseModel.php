@@ -25,7 +25,7 @@ class BaseModel extends Model
     {
         return $this->belongsTo('App\Models\User', 'deleted_by');
     }
-    public function restoreByUser()
+    public function restoredByUser()
     {
         return $this->belongsTo('App\Models\User', 'restored_by');
     }
