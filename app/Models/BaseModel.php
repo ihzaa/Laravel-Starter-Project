@@ -12,21 +12,22 @@ use App\Traits\UserStamp;
 class BaseModel extends Model
 {
     use HasFactory,  CanGetTableNameStatically, UserStamp, SoftDeletes;
-    
+
+    protected $guarded = [];
     public function createdByUser()
     {
-        return $this->belongsTo('App\Models\User', 'created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
     public function updatedByUser()
     {
-        return $this->belongsTo('App\Models\User', 'updated_by');
+        return $this->belongsTo(User::class, 'updated_by');
     }
     public function deletedByUser()
     {
-        return $this->belongsTo('App\Models\User', 'deleted_by');
+        return $this->belongsTo(User::class, 'deleted_by');
     }
     public function restoredByUser()
     {
-        return $this->belongsTo('App\Models\User', 'restored_by');
+        return $this->belongsTo(User::class, 'restored_by');
     }
 }

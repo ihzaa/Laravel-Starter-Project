@@ -17,22 +17,24 @@
                         <tr>
                             <td>Dibuat Oleh</td>
                             <td>{{ optional($data->createdByUser)->name }}</td>
-                            <td>{{ $data->created_at }}</td>
+                            <td>{{ \Carbon\Carbon::parse($data->created_at)->format('H:i d-m-Y') }}</td>
                         </tr>
                         <tr>
                             <td>Diupdate Oleh</td>
                             <td>{{ optional($data->updatedByUser)->name }}</td>
-                            <td>{{ $data->updated_at }}</td>
+                            <td>{{ \Carbon\Carbon::parse($data->updated_at)->format('H:i d-m-Y') }}</td>
                         </tr>
                         <tr>
                             <td>Dihapus Oleh</td>
                             <td>{{ optional($data->deletedByUser)->name }}</td>
-                            <td>{{ $data->deleted_at }}</td>
+                            <td>{{ $data->deleted_at == null ? '' : \Carbon\Carbon::parse($data->deleted_at)->format('H:i d-m-Y') }}
+                            </td>
                         </tr>
                         <tr>
                             <td>Direstore Oleh</td>
                             <td>{{ optional($data->restoredByUser)->name }}</td>
-                            <td>{{ $data->restored_at }}</td>
+                            <td>{{ $data->restored_at == null ? '' : \Carbon\Carbon::parse($data->restored_at)->format('H:i d-m-Y') }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
