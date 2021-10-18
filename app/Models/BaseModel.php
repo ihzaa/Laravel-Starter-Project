@@ -30,4 +30,9 @@ class BaseModel extends Model
     {
         return $this->belongsTo(User::class, 'restored_by');
     }
+    
+    public function getFormattedCreatedAtAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('h:i / d-m-Y ');
+    }
 }
