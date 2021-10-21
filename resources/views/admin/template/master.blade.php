@@ -20,7 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @stack('styles')
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini dark-mode">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -33,11 +33,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="index3.html" class="brand-link">
                 <img src="{{ asset('AdminLTE-3.1.0') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">{{ env('APP_NAME_SHORT') }}</span>
             </a>
 
             <!-- Sidebar -->
-            <div class="sidebar">
+            <div class="sidebar sidebar-dark-danger">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
@@ -49,7 +49,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
-                @include('admin.template.parts.sidebar')
+                @include('admin.template.parts.sidebar_menu')
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
