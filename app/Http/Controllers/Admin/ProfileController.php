@@ -9,6 +9,7 @@ use App\Utils\ValidationHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class ProfileController extends Controller
 {
@@ -27,12 +28,20 @@ class ProfileController extends Controller
         ];
 
         if ($request->old_password != null) {
-            $rules['old_password'] = [function ($attribute, $value, $fail) {
-                if (!Hash::check($value, auth()->user()->password)) {
-                    $fail('Password Lama Salah!');
-                }
-            }];
-            $rules['password'] = 'required|string|min:8|confirmed';
+            $rules['old_password'] = [
+                function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, auth()->user()->password)) {
+                        $fail('Password Lama Salah!');
+                    }
+                },
+            ];
+            $rules['password'] = [
+                'required', 'confirmed', 'min:8',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+            ];
             $rules['password_confirmation'] = 'required';
         }
         $validate = ValidationHelper::validate(
@@ -40,7 +49,8 @@ class ProfileController extends Controller
             $rules,
             [
                 'min' => ':attribute minimal terdiri dari :min karakter.',
-                'confirmed' => 'Password konfirmasi tidak sama.'
+                'confirmed' => 'Password konfirmasi tidak sama.',
+                'regex' => 'Format password tidak sesuai.'
             ],
             ['name' => 'nama', 'old_password' => 'Password Lama']
         );
@@ -48,7 +58,7 @@ class ProfileController extends Controller
         if ($validate->fails()) {
             return ValidationHelper::validationError($validate);
         }
-        
+
         $data = [
             'name' => $request->name,
             'email' => $request->email

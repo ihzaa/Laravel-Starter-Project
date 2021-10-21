@@ -4,23 +4,23 @@ namespace App\Utils;
 
 class FlashMessageHelper
 {
-
-    // data example :
-    // WITH TITLE
-    // $data = [
-    //      "bg" => "success",
-    //      "icon" => "plus",
-    //      "title" => "Berhasilll!",
-    //      "text" => "Berhasil menambahkan data!"
-    //          ]
-    // ---- OR ----
-    // WITHOUT TITLE
-    // $data = [
-    //      "class" => "alert-success",
-    //      "icon" => "plus",
-    //      "text" => "Berhasil menambahkan data!"
-    //          ]
-
+    /**
+    data example :
+    WITH TITLE
+    $data = [
+         "bg" => "success",
+         "icon" => "plus",
+         "title" => "Berhasilll!",
+         "text" => "Berhasil menambahkan data!"
+             ]
+    ---- OR ----
+    WITHOUT TITLE
+    $data = [
+         "class" => "alert-success",
+         "icon" => "plus",
+         "text" => "Berhasil menambahkan data!"
+             ]
+     */
     public static function bootstrapAlert($data)
     {
         if (isset($data['bg']))
