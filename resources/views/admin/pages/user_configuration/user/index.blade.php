@@ -2,6 +2,15 @@
 
 @section('page_title', 'User')
 
+@section('breadcrumb')
+    @php
+    $breadcrumbs = [
+        'Pengaturan User' => '',
+        'User' => route('admin.user_config.user.index'),
+    ];
+    @endphp
+    @include('admin.template.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
+@endsection
 
 @section('content')
     <div class="row">

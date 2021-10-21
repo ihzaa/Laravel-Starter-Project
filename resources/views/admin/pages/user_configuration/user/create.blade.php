@@ -2,6 +2,17 @@
 
 @section('page_title', 'User')
 
+@section('breadcrumb')
+    @php
+    $breadcrumbs = [
+        'Pengaturan User' => '',
+        'User' => route('admin.user_config.user.index'),
+        'Tambah' => '',
+    ];
+    @endphp
+    @include('admin.template.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -45,7 +56,8 @@
                             <select class="form-control" id="role" name="role">
                                 <option value="">Pilih Peran User...</option>
                                 @foreach ($data['roles'] as $role)
-                                    <option value="{{ $role->id }}" {{old('role') == $role->id ? 'selected' : ''}}>{{ $role->name }}</option>
+                                    <option value="{{ $role->id }}" {{ old('role') == $role->id ? 'selected' : '' }}>
+                                        {{ $role->name }}</option>
                                 @endforeach
                             </select>
                         </div>

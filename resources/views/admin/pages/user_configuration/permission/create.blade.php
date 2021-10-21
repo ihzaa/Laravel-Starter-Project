@@ -2,6 +2,17 @@
 
 @section('page_title', 'Perizinan')
 
+@section('breadcrumb')
+    @php
+    $breadcrumbs = [
+        'Pengaturan User' => '',
+        'Perizinan' => route('admin.user_config.permission.index'),
+        'Tambah' => '',
+    ];
+    @endphp
+    @include('admin.template.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
+@endsection
+
 @push('styles')
     <link rel="stylesheet" href="{{ asset('AdminLTE-3.1.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 @endpush
