@@ -91,8 +91,9 @@ class UserController extends Controller
         $user->save();
 
         FlashMessageHelper::bootstrapAlert([
-            'class' => 'alert-success',
+            'bg' => 'success',
             'icon' => 'plus',
+            'title' => 'Berhasil!',
             'text' => 'User ' . $request->name . ' berhasil ditambahkan!'
         ]);
 
@@ -132,8 +133,9 @@ class UserController extends Controller
         $user->save();
 
         FlashMessageHelper::bootstrapAlert([
-            'class' => 'alert-success',
+            'bg' => 'success',
             'icon' => 'save',
+            'title' => 'Berhasil!',
             'text' => 'User ' . $request->name . ' berhasil diubah!'
         ]);
 

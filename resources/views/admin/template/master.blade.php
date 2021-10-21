@@ -73,7 +73,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
-                @include('layouts.alerts.bootstrap_alert')
+                @if (session()->has('alert-title'))
+                    @include('layouts.alerts.bootstrap_alert_with_title')
+                @else
+                    @include('layouts.alerts.bootstrap_alert')
+                @endif
             </div>
             <!-- /.content-header -->
 
