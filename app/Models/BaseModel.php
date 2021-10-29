@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Observers\UserStampObserver;
 use App\Traits\CanGetTableNameStatically;
 use App\Traits\UserStamp;
+use Carbon\Carbon;
 
 class BaseModel extends Model
 {
     use HasFactory,  CanGetTableNameStatically, UserStamp, SoftDeletes;
 
-    protected $guarded = [];
+    // this can make vulnerability
+    // protected $guarded = [];
     public function createdByUser()
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -30,7 +32,7 @@ class BaseModel extends Model
     {
         return $this->belongsTo(User::class, 'restored_by');
     }
-    
+
     public function getFormattedCreatedAtAttribute()
     {
         return Carbon::parse($this->created_at)->format('h:i / d-m-Y ');
