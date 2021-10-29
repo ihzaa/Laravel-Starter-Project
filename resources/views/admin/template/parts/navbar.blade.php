@@ -18,7 +18,7 @@
                     <i class="fas fa-user-cog mr-2"></i> Profile
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="{{ route('auth.logout') }}" class="dropdown-item">
+                <a href="{{ route('admin.auth.logout') }}" class="dropdown-item">
                     <i class="fas fa-sign-out-alt mr-2"></i> Logout
                 </a>
                 {{-- <div class="dropdown-divider"></div>
