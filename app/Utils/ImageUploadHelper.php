@@ -6,6 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Image;
 use Symfony\Component\HttpFoundation\File\File;
+use File as JustFile;
 
 class ImageUploadHelper {
 
@@ -59,6 +60,10 @@ class ImageUploadHelper {
     public static function upload($image, $path, $name, $generateThumbnail = true, $thumbWidth = 200, $thumbHeight = 200) {
         $ext = $image->getClientOriginalExtension() ?: 'jpg';
 
+        if (!JustFile::exists($path)) {
+            JustFile::makeDirectory($path, 0775, true, true);
+        }
+        
         $filename = $name . '.' . $ext;
         $relativePath = $path . $filename;
         $fullPath = public_path( $relativePath );
@@ -87,5 +92,53 @@ class ImageUploadHelper {
         }
 
         return $result;
+    }
+    
+    public static function resizeAndUpload($imageRequestObject, $requiredSize, $path, $name, $generateThumbnail = true)
+    {
+        if (!JustFile::exists($path)) {
+            // Storage::makeDirectory($path, 0775, true, true);
+            JustFile::makeDirectory($path, 0775, true, true);
+        }
+        
+        $image = Image::make($imageRequestObject);
+        $ext = $image->getClientOriginalExtension();
+        $width = $image->width();
+        $height = $image->height();
+
+        // Check if image resize is required or not
+        if ($requiredSize >= $width && $requiredSize >= $height || $requiredSize == false) {
+            $image->save(public_path($path) . $name . '.' . $ext);
+            $data['resize'] = false;
+        } else {
+
+            $newWidth = 0;
+            $newHeight = 0;
+
+            $aspectRatio = $width / $height;
+            if ($aspectRatio >= 1.0) {
+                $newWidth = $requiredSize;
+                $newHeight = $requiredSize / $aspectRatio;
+            } else {
+                $newWidth = $requiredSize * $aspectRatio;
+                $newHeight = $requiredSize;
+            }
+
+
+            $image->resize($newWidth, $newHeight);
+            $image->save(public_path($path) . '/' . $name . '.' . $ext);
+            $data['resize'] = true;
+        }
+        if ($generateThumbnail) {
+            $filename_thumb = $name . '.thumb.' . $ext;
+            $relativePath_thumb = $path . $filename_thumb;
+            $fullPath_thumb = public_path($relativePath_thumb);
+
+            $image->fit(200, 200)->save($fullPath_thumb);
+        }
+        $data['status'] =  true;
+        $data['full_path'] = $path  . $name . '.' . $ext;
+
+        return $data;
     }
 }
