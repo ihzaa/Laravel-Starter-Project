@@ -13,12 +13,7 @@
         - input file must have data-previewTarget attribute, and the value is id of the img element to preview inputed image
         - input must have label element that equal placement with it
 
-        OR
-
-        just add tag below in your blade:
-
-        <x-input-image-with-preview img-preview-id="IDNYA_APA" label="LABELNYA" is-required="TRUE ATAU FALSE" input-name="INPUT_NAMENYA" :img-src="INI OPSIONAL, JIKA DIISI 'NULL' AKAN MENAMPILKAN IMG DEFAULT" ></x-input-image-with-preview>
-         --}}
+--}}
 
 @push('scripts')
     <script>
