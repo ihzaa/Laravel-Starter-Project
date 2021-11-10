@@ -97,7 +97,6 @@ class ImageUploadHelper {
     public static function resizeAndUpload($imageRequestObject, $requiredSize, $path, $name, $generateThumbnail = true)
     {
         if (!JustFile::exists($path)) {
-            // Storage::makeDirectory($path, 0775, true, true);
             JustFile::makeDirectory($path, 0775, true, true);
         }
         
