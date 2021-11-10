@@ -21,18 +21,12 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
-        // foreach ($guards as $guard) {
-        //     if (Auth::guard($guard)->check()) {
-        //         // JGN LUPA DIRUBAH INI YA
-        //         return redirect(route('admin.dashboard.index'));
-        //     }
-        // }
-
-        if (Auth::guard('admin')->check()) {
-
-            return redirect(route('admin.dashboard.index'));
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                // JGN LUPA DIRUBAH INI YA
+                return redirect(route('admin.dashboard.index'));
+            }
         }
-        // BUAT LAGI KONDISI BY GUARD JIKA ADA
 
         return $next($request);
     }
