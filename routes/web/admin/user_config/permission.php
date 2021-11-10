@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 const permission_permission = 'permission';
 
-Route::prefix('admin/user_config')->name('admin.user_config.')->middleware('auth:admin')->group(function () {
+Route::prefix('admin/user_config')->name('admin.user_config.')->middleware(['auth', 'auth:admin'])->group(function () {
     Route::prefix('permission')->name('permission.')->group(function () {
         Route::middleware(['permission:view ' . permission_permission])->group(function () {
             Route::get('/', [PermissionController::class, 'index'])->name('index');

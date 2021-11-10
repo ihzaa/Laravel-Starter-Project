@@ -18,7 +18,7 @@ class PermissionRoleUserSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $role3 = Role::create(['name' => 'Super-Admin']);
+        $role3 = Role::create(['guard_name' => 'admin', 'name' => 'Super-Admin']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
         $user = \App\Models\User::factory()->create([
             'name' => 'SuperAdmin',
@@ -27,20 +27,18 @@ class PermissionRoleUserSeeder extends Seeder
         ]);
         $user->assignRole($role3);
         // create permissions
-        CreatePermission::create('users');
+        CreatePermission::createAdminPermission('users');
 
         // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'admin']);
+        $role1 = Role::create(['guard_name' => 'admin', 'name' => 'admin']);
         $role1->givePermissionTo('create users');
         $role1->givePermissionTo('update users');
         $role1->givePermissionTo('delete users');
         $role1->givePermissionTo('view users');
         $role1->givePermissionTo('restore users');
 
-        CreatePermission::create('permissions');
+        CreatePermission::createAdminPermission('permissions');
 
         // In login method check the loged-in user Role
     }
-
-
 }
