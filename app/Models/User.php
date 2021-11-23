@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\User', 'restored_by');
     }
+    
+    public function guardName()
+    {
+        return $this->UserType()->first()->name;
+    }
 }
