@@ -83,10 +83,6 @@ class UserController extends Controller
             'role' => 'peran'
         ]);
 
-        if ($validate->fails()) {
-            return ValidationHelper::validationError($validate);
-        }
-
         $user = new User();
         $user->name = $request->name;
         $user->username = $request->username;
@@ -130,10 +126,6 @@ class UserController extends Controller
             ],
             'role' => 'required'
         ], ['min' => ':attribute Minimal terdiri dari :min karakter'], ['name' => 'nama', 'role' => 'peran']);
-
-        if ($validate->fails()) {
-            return ValidationHelper::validationError($validate);
-        }
 
         $user->name = $request->name;
         $user->email = $request->email;

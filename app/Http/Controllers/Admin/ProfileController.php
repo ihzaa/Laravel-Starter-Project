@@ -55,10 +55,6 @@ class ProfileController extends Controller
             ['name' => 'nama', 'old_password' => 'Password Lama']
         );
 
-        if ($validate->fails()) {
-            return ValidationHelper::validationError($validate);
-        }
-
         $data = [
             'name' => $request->name,
             'email' => $request->email

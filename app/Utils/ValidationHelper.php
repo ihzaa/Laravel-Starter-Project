@@ -2,8 +2,9 @@
 
 namespace App\Utils;
 
+use Error;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Validation\ValidationException;
 
 /**
  * ValidationHelper Class
@@ -37,9 +38,16 @@ class ValidationHelper
      */
     public static function validate($request, $rules, $messages = [], $attributes = [])
     {
-
         $validator = Validator::make($request->all(), $rules, array_merge((new static)->messages, $messages), $attributes);
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+        return $validator;
+    }
 
+    public static function validateWithoutAutoRedirect($request, $rules, $messages = [], $attributes = [])
+    {
+        $validator = Validator::make($request->all(), $rules, array_merge((new static)->messages, $messages), $attributes);
         return $validator;
     }
 
