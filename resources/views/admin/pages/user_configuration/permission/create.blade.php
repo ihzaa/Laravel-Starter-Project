@@ -1,4 +1,4 @@
-@extends('admin.template.master')
+@extends('layouts.master')
 
 @section('page_title', 'Perizinan')
 
@@ -10,7 +10,7 @@
         'Tambah' => '',
     ];
     @endphp
-    @include('admin.template.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
+    @include('layouts.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
 @endsection
 
 @push('styles')

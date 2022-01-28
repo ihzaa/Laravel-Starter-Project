@@ -1,4 +1,4 @@
-@extends('admin.template.master')
+@extends('layouts.master')
 
 @section('page_title', 'Pengaturan User')
 

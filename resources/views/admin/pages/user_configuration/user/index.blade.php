@@ -1,4 +1,4 @@
-@extends('admin.template.master')
+@extends('layouts.master')
 
 @section('page_title', 'User')
 
@@ -9,7 +9,7 @@
         'User' => route('admin.user_config.user.index'),
     ];
     @endphp
-    @include('admin.template.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
+    @include('layouts.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
 @endsection
 
 @section('content')

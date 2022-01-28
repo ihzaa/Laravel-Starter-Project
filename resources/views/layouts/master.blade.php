@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin - {{ env('APP_NAME') }} | @yield('page_title')</title>
+    <title>Admin - {{ config('app.short_name') }} | @yield('page_title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -24,7 +24,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="wrapper">
 
         <!-- Navbar -->
-        @include('admin.template.parts.navbar')
+        @include('layouts.parts.navbar')
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -33,7 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="index3.html" class="brand-link">
                 <img src="{{ asset('AdminLTE-3.1.0') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">{{ env('APP_NAME_SHORT') }}</span>
+                <span class="brand-text font-weight-light">{{ config('app.short_name') }}</span>
             </a>
 
             <!-- Sidebar -->
@@ -61,7 +61,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
-                @include('admin.template.parts.sidebar_menu')
+                @include('layouts.parts.sidebar_menu')
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
