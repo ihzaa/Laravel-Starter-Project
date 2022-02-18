@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 const permission_permission = 'Pengaturan_User_Perizinan';
 
-Route::prefix('admin/user_config')->name('admin.user_config.')->group(function () {
+Route::prefix('admin/user_config')->name('admin.user_config.')->middleware(['auth', 'user_type:Admin'])->group(function () {
     Route::prefix('permission')->name('permission.')->group(function () {
         Route::middleware(['permission:' . permission_permission . ' view'])->group(function () {
             Route::get('/', [PermissionController::class, 'index'])->name('index');

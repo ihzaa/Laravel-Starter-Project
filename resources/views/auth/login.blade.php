@@ -114,7 +114,7 @@
                                         <div class="py-3">
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-lg form-control-alt"
-                                                    id="login-username" name="username" placeholder="Username">
+                                                    id="login-username" name="username" placeholder="Username atau Email">
                                             </div>
                                             <div class="form-group">
                                                 <input type="password"

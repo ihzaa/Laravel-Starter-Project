@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 $permission = 'Pengaturan_User_User';
-Route::prefix('admin/user_config/user')->name('admin.user_config.user.')->group(function () use ($permission) {
+Route::prefix('admin/user_config/user')->name('admin.user_config.user.')->middleware(['auth', 'user_type:Admin'])->group(function () use ($permission) {
     Route::middleware(['permission:' . $permission . ' view'])->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('show/{id}', [UserController::class, 'show'])->name('show');

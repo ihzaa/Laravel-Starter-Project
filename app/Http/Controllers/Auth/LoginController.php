@@ -23,7 +23,7 @@ class LoginController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
-        $user = User::whereUsername($request->username)->first();
+        $user = User::whereUsername($request->username)->orWhere('email', $request->username)->first();
         if ($user == null) {
             FlashMessageHelper::bootstrapDangerAlert(
                 'Username atau password salah!'
