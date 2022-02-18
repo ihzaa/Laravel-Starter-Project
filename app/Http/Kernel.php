@@ -65,6 +65,5 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
-        'WS_BPJS_Auth_Token' => \App\Http\Middleware\WS_BPJS_Token::class
     ];
 }

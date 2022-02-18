@@ -18,6 +18,10 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasRoles, CanGetTableNameStatically, UserStamp;
     use SoftDeletes;
 
+    const user_type = [
+        "1" => 'Admin'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +32,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'user_type'
     ];
 
     /**
