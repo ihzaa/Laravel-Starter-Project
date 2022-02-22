@@ -74,7 +74,7 @@ class PermissionController extends Controller
 
         $role->syncPermissions($request->permissions);
         $role->save();
-        
+
         FlashMessageHelper::bootstrapSuccessAlert('Berhasil merubah perizian ' . $request->name . '!');
 
         return redirect(route('admin.user_config.permission.index'));
@@ -101,7 +101,7 @@ class PermissionController extends Controller
             $request,
             [
                 'permissions' => 'required|array',
-                'name' => 'required'
+                'name' => 'required|unique:permissions'
             ],
             [],
             ['name' => 'Nama Peran']
