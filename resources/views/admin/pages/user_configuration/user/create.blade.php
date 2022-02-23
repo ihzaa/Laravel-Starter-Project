@@ -48,6 +48,17 @@
                             </small>
                         </div>
                         <div class="form-group">
+                            <label for="user_type">Tipe User <span class="text-danger">*</span></label>
+                            <select class="form-control" id="user_type" name="user_type">
+                                <option value="" disabled selected>Pilih Tipe User...</option>
+                                @foreach ($data['user_type'] as $k => $v)
+                                    <option value="{{ $k }}">
+                                        {{ $v }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="role">Peran User <span class="text-danger">*</span></label>
                             <select class="form-control" id="role" name="role">
                                 <option value="">Pilih Peran User...</option>

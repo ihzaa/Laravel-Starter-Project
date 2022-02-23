@@ -61,6 +61,7 @@ class UserController extends Controller
     public function createGet()
     {
         $data['roles'] = Role::get();
+        $data['user_type'] = User::user_type;
         return view('admin.pages.user_configuration.user.create', compact('data'));
     }
 
@@ -77,10 +78,12 @@ class UserController extends Controller
                     ->mixedCase()
                     ->numbers()
             ],
-            'role' => 'required'
+            'role' => 'required',
+            'user_type' => 'required'
         ], ['min' => ':attribute Minimal terdiri dari :min karakter'], [
             'name' => 'nama',
-            'role' => 'peran'
+            'role' => 'peran',
+            'user_type' => 'Tipe User'
         ]);
 
         $user = new User();
@@ -88,17 +91,13 @@ class UserController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->user_type = $request->user_type;
 
         $role = Role::find($request->role);
         $user->assignRole($role);
         $user->save();
 
-        FlashMessageHelper::alert([
-            'bg' => 'success',
-            'icon' => 'plus',
-            'title' => 'Berhasil!',
-            'text' => 'User ' . $request->name . ' berhasil ditambahkan!'
-        ]);
+        FlashMessageHelper::bootstrapSuccessAlert('User ' . $request->name . ' berhasil ditambahkan!', 'Berhasil!');
 
         return redirect(route('admin.user_config.user.index'));
     }
@@ -108,6 +107,7 @@ class UserController extends Controller
         $data['obj'] = User::withTrashed()->find($id);
         $data['roles'] = Role::pluck('name', 'id');
         $data['user_role'] = $data['obj']->getRoleNames();
+        $data['user_type'] = User::user_type;
         return view('admin.pages.user_configuration.user.show', compact('data'));
     }
 
@@ -124,11 +124,13 @@ class UserController extends Controller
                     ->mixedCase()
                     ->numbers()
             ],
-            'role' => 'required'
-        ], ['min' => ':attribute Minimal terdiri dari :min karakter'], ['name' => 'nama', 'role' => 'peran']);
+            'role' => 'required',
+            'user_type' => 'required'
+        ], ['min' => ':attribute Minimal terdiri dari :min karakter'], ['name' => 'nama', 'role' => 'peran', 'user_type' => 'Tipe User']);
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->user_type = $request->user_type;
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }
@@ -137,12 +139,7 @@ class UserController extends Controller
         $user->assignRole($request->input('role'));
         $user->save();
 
-        FlashMessageHelper::alert([
-            'bg' => 'success',
-            'icon' => 'save',
-            'title' => 'Berhasil!',
-            'text' => 'User ' . $request->name . ' berhasil diubah!'
-        ]);
+        FlashMessageHelper::bootstrapSuccessAlert('User ' . $request->name . ' berhasil diubah!', 'Berhasil!');
 
         return back();
     }

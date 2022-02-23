@@ -36,7 +36,7 @@ class FlashMessageHelper
     {
         session()->flash('alert', '1');
         session()->flash('alert-icon', 'success');
-        session()->flash('alert-text', $title);
+        session()->flash('alert-title', $title);
         session()->flash('alert-text', $text);
     }
 
@@ -44,7 +44,7 @@ class FlashMessageHelper
     {
         session()->flash('alert', '1');
         session()->flash('alert-icon', 'error');
-        session()->flash('alert-text', $title);
+        session()->flash('alert-title', $title);
         session()->flash('alert-text', $text);
     }
 

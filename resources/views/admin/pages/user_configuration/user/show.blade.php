@@ -50,11 +50,26 @@
                             </small>
                         </div>
                         <div class="form-group">
+                            <label for="user_type">Tipe User <span class="text-danger">*</span></label>
+                            <select class="form-control" id="user_type" name="user_type">
+                                <option value="" disabled selected>Pilih Tipe
+                                    User...</option>
+                                @foreach ($data['user_type'] as $k => $v)
+                                    <option value="{{ $k }}" @if ($data['obj']->user_type == $k) selected @endif>
+                                        {{ $v }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="role">Peran User <span class="text-danger">*</span></label>
                             <select class="form-control" id="role" name="role">
-                                <option value="" disabled @if (count($data['user_role']) == 0) selected @endif>Pilih Peran User...</option>
+                                <option value="" disabled @if (count($data['user_role']) == 0) selected @endif>Pilih Peran
+                                    User...</option>
                                 @foreach ($data['roles'] as $k => $v)
-                                    <option value="{{ $k }}" @if (count($data['user_role']) > 0)  @if ($data['user_role'][0] == $v) selected @endif @endif>
+                                    <option value="{{ $k }}"
+                                        @if (count($data['user_role']) > 0) @if ($data['user_role'][0] == $v) selected @endif
+                                        @endif>
                                         {{ $v }}</option>
                                 @endforeach
                             </select>
