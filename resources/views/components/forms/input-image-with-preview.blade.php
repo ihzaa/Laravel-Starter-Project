@@ -16,6 +16,13 @@
                     {{ $isRequired == 'true' || $isRequired == 'TRUE' ? 'required' : '' }} name="{{ $inputName }}">
                 <label class="custom-file-label">{{ $label }}</label>
             </div>
+            <small>
+                <ul>
+                    @foreach ($notes as $note)
+                        <li>{{ $note }}</li>
+                    @endforeach
+                </ul>
+            </small>
         </div>
     </div>
 </div>
