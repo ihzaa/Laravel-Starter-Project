@@ -1,4 +1,4 @@
-@canany(['view permissions', 'view users'])
+@canany(['view Pengaturan_User_Perizinan', 'view Pengaturan_User_User'])
     <li class="nav-main-item {{ strpos(Route::current()->getName(), 'admin.user_config.') !== false ? 'open' : '' }}">
         <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false"
             href="#">
@@ -6,7 +6,7 @@
             <span class="nav-main-link-name">Pengaturan User</span>
         </a>
         <ul class="nav-main-submenu">
-            @can('view permissions')
+            @can('view Pengaturan_User_Perizinan')
                 <li class="nav-main-item">
                     <a class="nav-main-link {{ strpos(Route::current()->getName(), 'admin.user_config.permission.') !== false ? 'active' : '' }}"
                         href="{{ route('admin.user_config.permission.index') }}">
@@ -14,7 +14,7 @@
                     </a>
                 </li>
             @endcan
-            @can('view users')
+            @can('view Pengaturan_User_User')
                 <li class="nav-main-item">
                     <a class="nav-main-link {{ strpos(Route::current()->getName(), 'admin.user_config.user.') !== false ? 'active' : '' }}"
                         href="{{ route('admin.user_config.user.index') }}">

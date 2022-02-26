@@ -39,7 +39,12 @@ class LoginController extends Controller
         $remember = $request->has('remember') ? true : false;
         Auth::loginUsingId($user->id, $remember);
 
-        return redirect()->intended(route('admin.dashboard.index'));
+        $route = route('auth.login.get');
+        if ($user->user_type == 1)
+            $route = (route('admin.dashboard.index'));
+        // seterusnya
+
+        return redirect()->intended($route);
     }
 
     public function logout()

@@ -2,13 +2,20 @@
 
 namespace Database\Seeders;
 
+use App\Utils\PermissionHelper;
 use Spatie\Permission\Models\Permission;
 
-class createPermission {
+class createPermission
+{
     public static function create($permission)
     {
-        $actions = ['view', 'create', 'update', 'delete', 'restore'];
-        foreach ($actions as $action)
-            Permission::create(['name' => $action . ' ' . $permission]);
+        $actions = PermissionHelper::ACTIONS;
+
+        $permissionName = [];
+        foreach ($actions as $action) {
+            $permissionName[] = $action . ' ' . $permission;
+            Permission::create(['name' =>  $action . ' ' . $permission]);
+        }
+        return $permissionName;
     }
 }

@@ -138,7 +138,7 @@
                                                     <div class="checkbox c-checkbox">
                                                         <label>
                                                             <input name="permissions[]" type="checkbox"
-                                                                value="{{ $perm }} {{ $act }}"
+                                                                value="{{ $act }} {{ $perm }}"
                                                                 class="{{ $act }}" />
 
                                                         </label>

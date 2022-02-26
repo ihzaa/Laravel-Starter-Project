@@ -62,7 +62,6 @@
 
                                 <?php $index = 0; ?>
                                 @foreach (\App\Utils\PermissionHelper::SPECIAL_PERMISSIONS as $perm => $description)
-
                                     <tr data-section="specials">
                                         <td>{{ ++$index }}</td>
                                         <td>{{ ucwords(str_replace('_', ' ', $perm)) }}</td>
@@ -78,7 +77,6 @@
                                             </div>
                                         </td>
                                     </tr>
-
                                 @endforeach
 
                             </tbody>
@@ -88,7 +86,6 @@
                             <tbody>
 
                                 @foreach (App\Utils\PermissionHelper::PERMISSIONS as $section => $perms)
-
                                     <tr class="bg-gray-50">
                                         <th colspan="2">{{ strtoupper(str_replace('_', ' ', $section)) }}</th>
                                         <th colspan="3" class="text-right">Select/Unselect Section</th>
@@ -117,29 +114,29 @@
                                                 </div>
                                             </th>
                                         @endforeach
+                                        <th></th>
                                     </tr>
 
                                     <tr class="bg-gray-50">
                                         <th>#</th>
                                         <th>Modul</th>
-                                        <th class="text-center">View</th>
-                                        <th class="text-center">Create</th>
-                                        <th class="text-center">Edit</th>
-                                        <th class="text-center">Delete</th>
+                                        @foreach (App\Utils\PermissionHelper::ACTIONS as $act)
+                                            <th class="text-center">{{ ucwords($act) }}</th>
+                                        @endforeach
+                                        <th></th>
                                     </tr>
 
                                     @foreach ($perms as $index => $perm)
-
                                         <tr data-section="{{ $section }}">
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ ucwords(str_replace('_', ' ', $perm)) }}</td>
                                             @foreach (App\Utils\PermissionHelper::ACTIONS as $act)
-                                                <?php $hasPerm = in_array($perm . ' ' . $act, $permissions); ?>
+                                                <?php $hasPerm = in_array($act . ' ' . $perm, $permissions); ?>
                                                 <td class="text-center">
                                                     <div class="checkbox c-checkbox">
                                                         <label>
                                                             <input name="permissions[]" type="checkbox"
-                                                                value="{{ $perm }} {{ $act }}"
+                                                                value="{{ $act }} {{ $perm }}"
                                                                 class="{{ $act }}"
                                                                 {{ $hasPerm ? 'checked=""' : '' }} />
 
@@ -147,10 +144,16 @@
                                                     </div>
                                                 </td>
                                             @endforeach
+                                            <td class="text-center">
+                                                <div class="checkbox c-checkbox"
+                                                    style="display: inline-block; margin: 0 5px;">
+                                                    <label>
+                                                        <input type="checkbox" class="toggle-row" />
+                                                    </label>
+                                                </div>
+                                            </td>
                                         </tr>
-
                                     @endforeach
-
                                 @endforeach
 
                             </tbody>
@@ -164,10 +167,12 @@
                         @endcan
 
                         @can('delete permissions')
-                            <a class="btn btn-danger mr-auto" onclick="return confirm('Yakin menghapus?')"
-                                href="{{ route('admin.user_config.permission.delete', ['id' => $data['role']->id]) }}"><i
-                                    class="fa fa-trash" aria-hidden="true"></i>
-                                Hapus</a>
+                            @if ($data['role']->id != 2)
+                                <a class="btn btn-danger mr-auto" onclick="return confirm('Yakin menghapus?')"
+                                    href="{{ route('admin.user_config.permission.delete', ['id' => $data['role']->id]) }}"><i
+                                        class="fa fa-trash" aria-hidden="true"></i>
+                                    Hapus</a>
+                            @endif
                         @endcan
                     </div>
                 </form>
@@ -223,6 +228,17 @@
                     tr.find('input[type="checkbox"]').prop('checked', false);
                 }
             });
+
+            $(".toggle-row").change(function() {
+                var $this = $(this);
+                var $tr = $this.closest('tr');
+                if (this.checked) {
+                    $tr.find('input[type="checkbox"]').prop('checked', true);
+                } else {
+                    $tr.find('input[type="checkbox"]').prop('checked', false);
+                }
+            });
+
 
             $(".toggle-column").change(function() {
                 var $this = $(this);

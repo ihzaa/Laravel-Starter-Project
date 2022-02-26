@@ -38,15 +38,13 @@
         <div class="content-side">
             <!-- main item -->
             <ul class="nav-main">
-                <li class="nav-main-item">
-                    <a class="nav-main-link {{ strpos(Route::current()->getName(), 'admin.dashboard.') !== false ? 'active' : '' }}"
-                        href="{{ route('admin.dashboard.index') }}">
-                        <i class="nav-main-link-icon si si-speedometer"></i>
-                        <span class="nav-main-link-name">Dashboard</span>
-                    </a>
-                </li>
+                {{-- Sidebar Admin --}}
+                @if (auth()->user()->user_type == 1)
+                    @include('layouts.parts.sidebar_components.admin.index')
+                @endif
+                {{-- Sidebar Admin END --}}
 
-                @include('layouts.parts.sidebar_components.pengaturan_user')
+                {{-- SETERUSNYA --}}
             </ul>
             <!-- end main item -->
 
