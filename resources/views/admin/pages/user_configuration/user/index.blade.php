@@ -16,8 +16,10 @@
                 <div class="card-header">
                     List User
                     <div class="card-tools">
-                        <a class="btn btn-primary" href="{{ route('admin.user_config.user.createGet') }}"><i
-                                class="fa fa-plus" aria-hidden="true"></i> Tambah</a>
+                        @can('create Pengaturan_User_User')
+                            <a class="btn btn-primary" href="{{ route('admin.user_config.user.createGet') }}"><i
+                                    class="fa fa-plus" aria-hidden="true"></i> Tambah</a>
+                        @endcan
                     </div>
                     <!-- /.card-tools -->
                 </div>

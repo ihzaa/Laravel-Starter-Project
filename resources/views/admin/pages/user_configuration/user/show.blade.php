@@ -77,7 +77,7 @@
                     </div>
                     <div class="card-footer text-muted text-center">
                         @if ($data['obj']->trashed())
-                            @can('restore')
+                            @can('restore Pengaturan_User_User')
                                 <a class="btn btn-danger btn-info"
                                     href="{{ route('admin.user_config.user.restore', ['id' => $data['obj']->id]) }}"
                                     data-toggle="tooltip" data-placement="top" title="Hapus"
@@ -85,10 +85,10 @@
                                     Kembalikan</a>
                             @endcan
                         @else
-                            @can('user update')
+                            @can('user Pengaturan_User_User')
                                 <button class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
                             @endcan
-                            @can('delete')
+                            @can('delete Pengaturan_User_User')
                                 <a class="btn btn-danger btn-delete"
                                     href="{{ route('admin.user_config.user.delete', ['id' => $data['obj']->id]) }}"
                                     data-toggle="tooltip" data-placement="top" title="Hapus"

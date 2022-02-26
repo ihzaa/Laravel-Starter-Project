@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             PermissionRoleUserSeeder::class,
-            WebServiceAntrianUserSeeders::class,
         ]);
 
         // for ($i = 0; $i < 100; $i++) {

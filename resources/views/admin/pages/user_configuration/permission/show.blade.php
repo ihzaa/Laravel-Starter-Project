@@ -160,13 +160,13 @@
                         </table>
                     </div>
                     <div class="card-footer d-flex">
-                        @can('update permissions')
+                        @can('update Pengaturan_User_Perizinan')
                             <button class="btn btn-primary ml-auto mr-2" type="submit"><i class="fa fa-check"
                                     aria-hidden="true"></i>
                                 Simpan</button>
                         @endcan
 
-                        @can('delete permissions')
+                        @can('delete Pengaturan_User_Perizinan')
                             @if ($data['role']->id != 2)
                                 <a class="btn btn-danger mr-auto" onclick="return confirm('Yakin menghapus?')"
                                     href="{{ route('admin.user_config.permission.delete', ['id' => $data['role']->id]) }}"><i

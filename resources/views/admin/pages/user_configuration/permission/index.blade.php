@@ -15,7 +15,7 @@
             <div class="card bg-secondary-300">
                 <div class="card-header d-flex">
                     <h3 class="card-title mr-auto">List Peran</h3>
-                    @can('create permissions')
+                    @can('create Pengaturan_User_Perizinan')
                         <a class="btn btn-primary" href="{{ route('admin.user_config.permission.createGet') }}"><i
                                 class="fa fa-plus" aria-hidden="true"></i> Tambah</a>
                     @endcan
