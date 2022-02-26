@@ -19,13 +19,13 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
-        $guards = empty($guards) ? [null] : $guards;
+        $user = auth()->user();
 
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                // JGN LUPA DIRUBAH INI YA
+        if ($user) {
+            // Jika role user sekarang admin maka balik ke dashboard admin
+            if ($user->user_type == 1)
                 return redirect(route('admin.dashboard.index'));
-            }
+            // Seterusnya ....
         }
 
         return $next($request);
