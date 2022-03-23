@@ -11,7 +11,12 @@
             $('.th-datatable-select').on('change', function() {
                 let i = $(this).attr('data-column');
                 let v = $(this).val();
-                $("#{{ $table_id }}").DataTable().columns(i).search(v).draw();
+                let tableId = "#{{ isset($table_id) ? $table_id : '' }}";
+
+                if (tableId == '#') {
+                    tableId = $(this).closest('table')[0]
+                }
+                $(tableId).DataTable().columns(i).search(v).draw();
             });
         })
     </script>
