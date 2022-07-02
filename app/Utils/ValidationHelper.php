@@ -2,6 +2,7 @@
 
 namespace App\Utils;
 
+use App\Exceptions\ValidationAjaxException;
 use Error;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -40,7 +41,11 @@ class ValidationHelper
     {
         $validator = Validator::make($request->all(), $rules, array_merge((new static)->messages, $messages), $attributes);
         if ($validator->fails()) {
-            throw new ValidationException($validator);
+            if ($request->header('ajax') == "1" || $request->expectsJson() || $request->ajax() || strpos($request->header('Content-Type'), 'application/json') !== false) {
+                throw new ValidationAjaxException($validator);
+            } else {
+                throw new ValidationException($validator);
+            }
         }
         return $validator;
     }
