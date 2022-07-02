@@ -12,8 +12,9 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Traits\UserStamp;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, HasRoles, CanGetTableNameStatically, UserStamp;
     use SoftDeletes;
