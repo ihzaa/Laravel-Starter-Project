@@ -84,20 +84,19 @@ class AuthController extends Controller
         $refresh_token = $request->refresh_token;
 
         $user = User::where('refresh_token', $refresh_token)->first();
-        if (!$user) {
-            return response()->json(['message' => 'Refresh Token not found'], 400);
-        }
+        if (!$user)
+            return response()->json(['message' => 'Authorization Token not found', 'subcode' => 4011], 401);
 
+        $request->headers->set('Authorization', 'Bearer ' . $refresh_token);
         try {
-            $request->headers->set('Authorization', 'Bearer ' . $refresh_token);
             $user = JWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
-                return response()->json(['message' => 'Refresh Token is Invalid'], 400);
+                return response()->json(['message' => 'Token is Invalid', 'subcode' => 4012], 401);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
-                return response()->json(['message' => 'Refresh Token is Expired'], 400);
+                return response()->json(['message' => 'Token is Expired', 'subcode' => 4013], 401);
             } else {
-                return response()->json(['message' => 'Refresh Token not found'], 400);
+                return response()->json(['message' => 'Authorization Token not found', 'subcode' => 4011], 401);
             }
         }
         $token = $this->getAccessToken($user);
