@@ -6,7 +6,7 @@
     @php
     $breadcrumbs = ['Pengaturan User', ['User', route('admin.user_config.user.index')]];
     @endphp
-    @include('layouts.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
+    @include('layouts.parts.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 @endsection
 
 @section('content')
@@ -40,10 +40,9 @@
                                 <th></th>
                                 <th></th>
                                 <th>
-                                    <select id="status" class="form-control">
-                                        <option value="aktif">Aktif</option>
-                                        <option value="delete">Dihapus</option>
-                                    </select>
+                                    @include('layouts.data_tables.th_status', [
+                                        'model' => $data['model'],
+                                    ])
                                 </th>
                                 <th></th>
                             </tr>
@@ -92,16 +91,6 @@
                     }
                 ]
             });
-
-            $("#status").change(function() {
-                let url = "";
-                if ($(this).val() != "aktif") {
-                    url = "{{ route('admin.user_config.user.index', ['status' => '__status']) }}"
-                } else {
-                    url = "{{ route('admin.user_config.user.index') }}"
-                }
-                table.ajax.url(url.replace('__status', $(this).val())).load();
-            })
         });
     </script>
 @endpush

@@ -19,25 +19,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            if ($request->has('status')) {
+            if (request()->has('deleted')) {
                 $query = User::onlyTrashed();
-                return datatables()->of($query)
-                    ->addColumn('status', function ($obj) {
-                        if ($obj->trashed()) {
-                            return 'Dihapus';
-                        } else {
-                            return 'Aktif';
-                        }
-                    })
-                    ->addColumn('action', function ($obj) {
-                        return '<a class="btn btn-sm btn-success" href="' . route('admin.user_config.user.show', ['id' => $obj->id]) . '" data-toggle="tooltip" data-placement="top" title="Lihat Detail"><i class="far fa-eye"></i></a>';
-                    })
-                    ->editColumn('created_at', function ($data) {
-                        return Carbon::parse($data->created_at)->format('d-m-Y');
-                    })
-                    ->make(true);
+            } else {
+                $query = User::query();
             }
-            $query = User::query();
             return datatables()->of($query)
                 ->addColumn('status', function ($obj) {
                     if ($obj->trashed()) {
@@ -54,8 +40,8 @@ class UserController extends Controller
                 })
                 ->make(true);
         }
-
-        return view('admin.pages.user_configuration.user.index');
+        $data['model'] = User::class;
+        return view('admin.pages.user_configuration.user.index', compact('data'));
     }
 
     public function createGet()
@@ -149,11 +135,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        FlashMessageHelper::alert([
-            'class' => 'alert-success',
-            'icon' => 'trash-alt',
-            'text' => 'User ' . $user->name . ' berhasil dihapus!'
-        ]);
+        FlashMessageHelper::bootstrapSuccessAlert('User ' . $user->name . ' berhasil dihapus!');
 
         return redirect(route('admin.user_config.user.index'));
     }
@@ -163,11 +145,7 @@ class UserController extends Controller
         $user = User::onlyTrashed()->where('id', $id)->first();
         $user->restore();
 
-        FlashMessageHelper::alert([
-            'class' => 'alert-success',
-            'icon' => 'trash-restore-alt',
-            'text' => 'User ' . $user->name . ' berhasil dikembalikan!'
-        ]);
+        FlashMessageHelper::bootstrapSuccessAlert('User ' . $user->name . ' berhasil dikembalikan!');
 
         return redirect(route('admin.user_config.user.show', ['id' => $id]));
     }
