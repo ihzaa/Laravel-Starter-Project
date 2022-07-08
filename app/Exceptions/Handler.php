@@ -36,6 +36,13 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+        if (request()->expectsJson()) {
+            $this->renderable(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
+                return response()->json([
+                    'message' => 'You do not have the required permission.'
+                ], 403);
+            });
+        }
         $this->reportable(function (Throwable $e) {
             //
         });
