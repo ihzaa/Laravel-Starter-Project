@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\UserConfig\PermissionController;
+use App\Http\Controllers\Web\Admin\UserConfig\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 $permission = 'Pengaturan_User_Perizinan';

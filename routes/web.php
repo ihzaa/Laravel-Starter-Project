@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\DeployController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Process\Process;

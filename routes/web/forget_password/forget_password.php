@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ForgetPassword\ForgetPasswordController;
+use App\Http\Controllers\Web\ForgetPassword\ForgetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('forget/password')->name('forget.password.')->middleware(['guest'])->group(function () {

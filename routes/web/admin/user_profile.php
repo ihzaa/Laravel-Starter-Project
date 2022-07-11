@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Web\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin/profile')->name('admin.profile.')->middleware(['auth'])->group(function () {
