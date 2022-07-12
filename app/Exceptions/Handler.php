@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -50,13 +52,30 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        // exception untuk findOrFail eloquent
+        // API exception
         if ($request->header('ajax') == "1" || $request->expectsJson() || $request->ajax() || $request->header('Content-Type') == 'application/json') {
             if ($e instanceof ModelNotFoundException) {
                 return response()->json([
                     'message' => 'Record not found.',
                 ], 404);
             }
+
+            if ($e instanceof ValidationException) {
+                return response()->json([
+                    'message' => $e->validator->messages()->first()
+                ], 422);
+            }
+
+            if ($e instanceof NotFoundHttpException) {
+                return response()->json([
+                    'message' => 'Request Not Found'
+                ], 404);
+            }
+
+            return response()->json([
+                'message' => 'Server Error',
+                'error' => get_class($e)
+            ]);
         }
 
         return parent::render($request, $e);
