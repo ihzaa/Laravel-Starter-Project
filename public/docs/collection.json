@@ -5,19 +5,19 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/Laravel-Starter-Project.test"
+            "value": "http:\/\/192.168.219.178:3000"
         }
     ],
     "info": {
         "name": "Laravel-Starter-Project",
-        "_postman_id": "734498f0-e270-43a6-b4dc-c9dae44c5da0",
+        "_postman_id": "c8e6de2d-4660-41d7-9504-f59d918cb54b",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
         {
-            "name": "Endpoints",
-            "description": "",
+            "name": "Auth",
+            "description": "\nAPIs for auth users",
             "item": [
                 {
                     "name": "Login user",
@@ -41,7 +41,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"username\":\"quidem\",\"password\":\"culpa\"}"
+                            "raw": "{\"username\":\"vel\",\"password\":\"accusamus\"}"
                         },
                         "description": "API for logged in a user.",
                         "auth": {
@@ -97,7 +97,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"refresh_token\":\"et\"}"
+                            "raw": "{\"refresh_token\":\"omnis\"}"
                         },
                         "description": "Refresh access token when expired.",
                         "auth": {
@@ -238,6 +238,43 @@
                             "name": "Access token is not found"
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "name": "Registration",
+            "description": "",
+            "item": [
+                {
+                    "name": "Register user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"quia\",\"username\":\"autem\",\"email\":\"margie.price@example.org\",\"password\":\"\"}"
+                        },
+                        "description": "API for register a user.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
                 }
             ]
         }

@@ -2,10 +2,13 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -72,10 +75,28 @@ class Handler extends ExceptionHandler
                 ], 404);
             }
 
+            if ($e instanceof MethodNotAllowedHttpException) {
+                return response()->json([
+                    'message' => $e->getMessage()
+                ], 405);
+            }
+
+            if ($e instanceof UnauthorizedException) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                ], 401);
+            }
+
+            if ($e instanceof AuthenticationException) {
+                return response()->json([
+                    'message' => $e->getMessage(), 'subcode' => 4011
+                ], 401);
+            }
+
             return response()->json([
-                'message' => 'Server Error',
-                'error' => get_class($e)
-            ]);
+                'message' => config('app.debug') ? $e->getMessage() : 'Server Error',
+                'exception' => get_class($e)
+            ], 500);
         }
 
         return parent::render($request, $e);
@@ -108,8 +129,6 @@ class Handler extends ExceptionHandler
         return $request->expectsJson()
             ? response()->json([
                 'message' => $exception->getMessage(),
-                'auth_url' => $login,
-                'staus'    => false
             ], 401)
             : redirect()->guest($login);
     }

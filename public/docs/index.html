@@ -21,12 +21,11 @@
 
     <style id="language-style">
         /* starts out as display none and is replaced with js later  */
-                    body .content .bash-example code { display: none; }
                     body .content .javascript-example code { display: none; }
             </style>
 
     <script>
-        var baseUrl = "http://Laravel-Starter-Project.test";
+        var baseUrl = "http://192.168.219.178:3000";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -36,7 +35,7 @@
 
 </head>
 
-<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;]">
+<body data-languages="[&quot;javascript&quot;]">
 
 <a href="#" id="nav-button">
     <span>
@@ -47,7 +46,6 @@
 <div class="tocify-wrapper">
     
             <div class="lang-selector">
-                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
                                             <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
                     </div>
     
@@ -70,21 +68,31 @@
                                                 </ul>
                     
                     <ul id="tocify-header-2" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="endpoints">
-                    <a href="#endpoints">Endpoints</a>
+                <li class="tocify-item level-1" data-unique="auth">
+                    <a href="#auth">Auth</a>
                 </li>
-                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-auth-login">
-                        <a href="#endpoints-POSTapi-auth-login">Login user</a>
+                                    <ul id="tocify-subheader-auth" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="auth-POSTapi-auth-login">
+                        <a href="#auth-POSTapi-auth-login">Login user</a>
                     </li>
-                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-auth-refresh">
-                        <a href="#endpoints-POSTapi-auth-refresh">Refresh Token</a>
+                                    <li class="tocify-item level-2" data-unique="auth-POSTapi-auth-refresh">
+                        <a href="#auth-POSTapi-auth-refresh">Refresh Token</a>
                     </li>
-                                    <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-auth-logout">
-                        <a href="#endpoints-DELETEapi-auth-logout">Logout user</a>
+                                    <li class="tocify-item level-2" data-unique="auth-DELETEapi-auth-logout">
+                        <a href="#auth-DELETEapi-auth-logout">Logout user</a>
                     </li>
-                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-auth-check">
-                        <a href="#endpoints-GETapi-auth-check">Check logged in user</a>
+                                    <li class="tocify-item level-2" data-unique="auth-GETapi-auth-check">
+                        <a href="#auth-GETapi-auth-check">Check logged in user</a>
+                    </li>
+                                                    </ul>
+                            </ul>
+                    <ul id="tocify-header-3" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="registration">
+                    <a href="#registration">Registration</a>
+                </li>
+                                    <ul id="tocify-subheader-registration" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="registration-POSTapi-register">
+                        <a href="#registration-POSTapi-register">Register user</a>
                     </li>
                                                     </ul>
                             </ul>
@@ -98,7 +106,7 @@
                             <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
                     </ul>
         <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 6 2022</li>
+        <li>Last updated: October 18 2022</li>
     </ul>
 </div>
 
@@ -112,16 +120,16 @@ You can switch the language used with the tabs at the top right (or from the nav
 <blockquote>
 <p>Base URL</p>
 </blockquote>
-<pre><code class="language-yaml">http://Laravel-Starter-Project.test</code></pre>
+<pre><code class="language-yaml">http://192.168.219.178:3000</code></pre>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>This API is not authenticated.</p>
 
-        <h1 id="endpoints">Endpoints</h1>
+        <h1 id="auth">Auth</h1>
 
-    
+    <p>APIs for auth users</p>
 
-            <h2 id="endpoints-POSTapi-auth-login">Login user</h2>
+            <h2 id="auth-POSTapi-auth-login">Login user</h2>
 
 <p>
 </p>
@@ -132,21 +140,9 @@ You can switch the language used with the tabs at the top right (or from the nav
 <blockquote>Example request:</blockquote>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://Laravel-Starter-Project.test/api/auth/login" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"username\": \"quidem\",
-    \"password\": \"culpa\"
-}"
-</code></pre></div>
-
-
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://Laravel-Starter-Project.test/api/auth/login"
+    "http://192.168.219.178:3000/api/auth/login"
 );
 
 const headers = {
@@ -155,8 +151,8 @@ const headers = {
 };
 
 let body = {
-    "username": "quidem",
-    "password": "culpa"
+    "username": "vel",
+    "password": "accusamus"
 };
 
 fetch(url, {
@@ -253,7 +249,7 @@ fetch(url, {
                 <input type="text"
                name="username"
                data-endpoint="POSTapi-auth-login"
-               value="quidem"
+               value="vel"
                data-component="body" hidden>
     <br>
 <p>The username of the user.</p>
@@ -263,7 +259,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-auth-login"
-               value="culpa"
+               value="accusamus"
                data-component="body" hidden>
     <br>
 <p>The password of the user.</p>
@@ -287,7 +283,7 @@ fetch(url, {
 <br>
 <p>The token that will be used for get new <code>access_token</code> when expired, the <code>refresh_token</code> expired in 1 month.</p>
         </p>
-                <h2 id="endpoints-POSTapi-auth-refresh">Refresh Token</h2>
+                <h2 id="auth-POSTapi-auth-refresh">Refresh Token</h2>
 
 <p>
 </p>
@@ -298,20 +294,9 @@ fetch(url, {
 <blockquote>Example request:</blockquote>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://Laravel-Starter-Project.test/api/auth/refresh" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"refresh_token\": \"et\"
-}"
-</code></pre></div>
-
-
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://Laravel-Starter-Project.test/api/auth/refresh"
+    "http://192.168.219.178:3000/api/auth/refresh"
 );
 
 const headers = {
@@ -320,7 +305,7 @@ const headers = {
 };
 
 let body = {
-    "refresh_token": "et"
+    "refresh_token": "omnis"
 };
 
 fetch(url, {
@@ -418,7 +403,7 @@ fetch(url, {
                 <input type="text"
                name="refresh_token"
                data-endpoint="POSTapi-auth-refresh"
-               value="et"
+               value="omnis"
                data-component="body" hidden>
     <br>
 <p>The <code>refresh_token</code> from login API.</p>
@@ -442,7 +427,7 @@ fetch(url, {
 <br>
 <p>The token that will be used in every request header to authorize the user, the <code>access_token</code> only valid for 15 minutes.</p>
         </p>
-                <h2 id="endpoints-DELETEapi-auth-logout">Logout user</h2>
+                <h2 id="auth-DELETEapi-auth-logout">Logout user</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -454,17 +439,9 @@ fetch(url, {
 <blockquote>Example request:</blockquote>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request DELETE \
-    "http://Laravel-Starter-Project.test/api/auth/logout" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --header "x-access-token: {access_token from login API}"</code></pre></div>
-
-
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://Laravel-Starter-Project.test/api/auth/logout"
+    "http://192.168.219.178:3000/api/auth/logout"
 );
 
 const headers = {
@@ -582,7 +559,7 @@ fetch(url, {
 <br>
 <p>The subcode of the response HTTP response code.</p>
         </p>
-                <h2 id="endpoints-GETapi-auth-check">Check logged in user</h2>
+                <h2 id="auth-GETapi-auth-check">Check logged in user</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -594,17 +571,9 @@ fetch(url, {
 <blockquote>Example request:</blockquote>
 
 
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://Laravel-Starter-Project.test/api/auth/check" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --header "x-access-token: {access_token from login API}"</code></pre></div>
-
-
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://Laravel-Starter-Project.test/api/auth/check"
+    "http://192.168.219.178:3000/api/auth/check"
 );
 
 const headers = {
@@ -724,13 +693,136 @@ fetch(url, {
 <br>
 <p>The subcode of the response HTTP response code.</p>
         </p>
-        
+            <h1 id="registration">Registration</h1>
+
+    
+
+            <h2 id="registration-POSTapi-register">Register user</h2>
+
+<p>
+</p>
+
+<p>API for register a user.</p>
+
+<span id="example-requests-POSTapi-register">
+<blockquote>Example request:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://192.168.219.178:3000/api/register"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "quia",
+    "username": "autem",
+    "email": "margie.price@example.org",
+    "password": ""
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-register">
+</span>
+<span id="execution-results-POSTapi-register" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-register"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-register"></code></pre>
+</span>
+<span id="execution-error-POSTapi-register" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-register"></code></pre>
+</span>
+<form id="form-POSTapi-register" data-method="POST"
+      data-path="api/register"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-register', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-register"
+                    onclick="tryItOut('POSTapi-register');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-register"
+                    onclick="cancelTryOut('POSTapi-register');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-register" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/register</code></b>
+        </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="name"
+               data-endpoint="POSTapi-register"
+               value="quia"
+               data-component="body" hidden>
+    <br>
+<p>Name of the user.</p>
+        </p>
+                <p>
+            <b><code>username</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="username"
+               data-endpoint="POSTapi-register"
+               value="autem"
+               data-component="body" hidden>
+    <br>
+<p>Username of the user, used to login.</p>
+        </p>
+                <p>
+            <b><code>email</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="email"
+               data-endpoint="POSTapi-register"
+               value="margie.price@example.org"
+               data-component="body" hidden>
+    <br>
+<p>Email of the user. Must be a valid email address.</p>
+        </p>
+                <p>
+            <b><code>password</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="password"
+               data-endpoint="POSTapi-register"
+               value=""
+               data-component="body" hidden>
+    <br>
+<p>Password of the user. Must be at least 8 characters.</p>
+        </p>
+        </form>
+
+    
 
         
     </div>
     <div class="dark-box">
                     <div class="lang-selector">
-                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
                                                         <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
                             </div>
             </div>

@@ -12,6 +12,11 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
 
+/**
+ * @group Auth
+ *
+ * APIs for auth users
+ */
 class AuthController extends Controller
 {
 
