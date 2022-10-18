@@ -21,11 +21,12 @@
 
     <style id="language-style">
         /* starts out as display none and is replaced with js later  */
+                    body .content .bash-example code { display: none; }
                     body .content .javascript-example code { display: none; }
             </style>
 
     <script>
-        var baseUrl = "http://192.168.219.178:3000";
+        var baseUrl = "http://192.168.118.35:3000";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -35,7 +36,7 @@
 
 </head>
 
-<body data-languages="[&quot;javascript&quot;]">
+<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;]">
 
 <a href="#" id="nav-button">
     <span>
@@ -46,6 +47,7 @@
 <div class="tocify-wrapper">
     
             <div class="lang-selector">
+                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
                                             <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
                     </div>
     
@@ -120,7 +122,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 <blockquote>
 <p>Base URL</p>
 </blockquote>
-<pre><code class="language-yaml">http://192.168.219.178:3000</code></pre>
+<pre><code class="language-yaml">http://192.168.118.35:3000</code></pre>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>This API is not authenticated.</p>
@@ -140,9 +142,21 @@ You can switch the language used with the tabs at the top right (or from the nav
 <blockquote>Example request:</blockquote>
 
 
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://192.168.118.35:3000/api/auth/login" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"username\": \"minus\",
+    \"password\": \"ratione\"
+}"
+</code></pre></div>
+
+
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://192.168.219.178:3000/api/auth/login"
+    "http://192.168.118.35:3000/api/auth/login"
 );
 
 const headers = {
@@ -151,8 +165,8 @@ const headers = {
 };
 
 let body = {
-    "username": "vel",
-    "password": "accusamus"
+    "username": "minus",
+    "password": "ratione"
 };
 
 fetch(url, {
@@ -249,7 +263,7 @@ fetch(url, {
                 <input type="text"
                name="username"
                data-endpoint="POSTapi-auth-login"
-               value="vel"
+               value="minus"
                data-component="body" hidden>
     <br>
 <p>The username of the user.</p>
@@ -259,7 +273,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-auth-login"
-               value="accusamus"
+               value="ratione"
                data-component="body" hidden>
     <br>
 <p>The password of the user.</p>
@@ -294,9 +308,20 @@ fetch(url, {
 <blockquote>Example request:</blockquote>
 
 
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://192.168.118.35:3000/api/auth/refresh" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"refresh_token\": \"id\"
+}"
+</code></pre></div>
+
+
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://192.168.219.178:3000/api/auth/refresh"
+    "http://192.168.118.35:3000/api/auth/refresh"
 );
 
 const headers = {
@@ -305,7 +330,7 @@ const headers = {
 };
 
 let body = {
-    "refresh_token": "omnis"
+    "refresh_token": "id"
 };
 
 fetch(url, {
@@ -403,7 +428,7 @@ fetch(url, {
                 <input type="text"
                name="refresh_token"
                data-endpoint="POSTapi-auth-refresh"
-               value="omnis"
+               value="id"
                data-component="body" hidden>
     <br>
 <p>The <code>refresh_token</code> from login API.</p>
@@ -439,9 +464,17 @@ fetch(url, {
 <blockquote>Example request:</blockquote>
 
 
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://192.168.118.35:3000/api/auth/logout" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "x-access-token: {access_token from login API}"</code></pre></div>
+
+
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://192.168.219.178:3000/api/auth/logout"
+    "http://192.168.118.35:3000/api/auth/logout"
 );
 
 const headers = {
@@ -571,9 +604,17 @@ fetch(url, {
 <blockquote>Example request:</blockquote>
 
 
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://192.168.118.35:3000/api/auth/check" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --header "x-access-token: {access_token from login API}"</code></pre></div>
+
+
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://192.168.219.178:3000/api/auth/check"
+    "http://192.168.118.35:3000/api/auth/check"
 );
 
 const headers = {
@@ -708,9 +749,24 @@ fetch(url, {
 <blockquote>Example request:</blockquote>
 
 
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://192.168.118.35:3000/api/register" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"distinctio\",
+    \"username\": \"id\",
+    \"email\": \"weimann.amy@example.com\",
+    \"password\": \"1234passWORD\",
+    \"password_confirmation\": \"1234passWORD\"
+}"
+</code></pre></div>
+
+
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://192.168.219.178:3000/api/register"
+    "http://192.168.118.35:3000/api/register"
 );
 
 const headers = {
@@ -719,10 +775,11 @@ const headers = {
 };
 
 let body = {
-    "name": "quia",
-    "username": "autem",
-    "email": "margie.price@example.org",
-    "password": ""
+    "name": "distinctio",
+    "username": "id",
+    "email": "weimann.amy@example.com",
+    "password": "1234passWORD",
+    "password_confirmation": "1234passWORD"
 };
 
 fetch(url, {
@@ -780,7 +837,7 @@ fetch(url, {
                 <input type="text"
                name="name"
                data-endpoint="POSTapi-register"
-               value="quia"
+               value="distinctio"
                data-component="body" hidden>
     <br>
 <p>Name of the user.</p>
@@ -790,7 +847,7 @@ fetch(url, {
                 <input type="text"
                name="username"
                data-endpoint="POSTapi-register"
-               value="autem"
+               value="id"
                data-component="body" hidden>
     <br>
 <p>Username of the user, used to login.</p>
@@ -800,7 +857,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-register"
-               value="margie.price@example.org"
+               value="weimann.amy@example.com"
                data-component="body" hidden>
     <br>
 <p>Email of the user. Must be a valid email address.</p>
@@ -810,10 +867,20 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-register"
-               value=""
+               value="1234passWORD"
                data-component="body" hidden>
     <br>
 <p>Password of the user. Must be at least 8 characters.</p>
+        </p>
+                <p>
+            <b><code>password_confirmation</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="password_confirmation"
+               data-endpoint="POSTapi-register"
+               value="1234passWORD"
+               data-component="body" hidden>
+    <br>
+<p>Confirmation Password of the user. Must be at least 8 characters.</p>
         </p>
         </form>
 
@@ -823,6 +890,7 @@ fetch(url, {
     </div>
     <div class="dark-box">
                     <div class="lang-selector">
+                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
                                                         <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
                             </div>
             </div>

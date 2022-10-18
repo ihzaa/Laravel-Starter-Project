@@ -20,28 +20,35 @@ endpoints:
         name: name
         description: 'Name of the user.'
         required: true
-        example: quia
+        example: distinctio
         type: string
         custom: []
       username:
         name: username
         description: 'Username of the user, used to login.'
         required: true
-        example: autem
+        example: id
         type: string
         custom: []
       email:
         name: email
         description: 'Email of the user. Must be a valid email address.'
         required: true
-        example: margie.price@example.org
+        example: weimann.amy@example.com
         type: string
         custom: []
       password:
         name: password
         description: 'Password of the user. Must be at least 8 characters.'
         required: true
-        example: ''
+        example: 1234passWORD
+        type: string
+        custom: []
+      password_confirmation:
+        name: password_confirmation
+        description: 'Confirmation Password of the user. Must be at least 8 characters.'
+        required: true
+        example: 1234passWORD
         type: string
         custom: []
     responses: []

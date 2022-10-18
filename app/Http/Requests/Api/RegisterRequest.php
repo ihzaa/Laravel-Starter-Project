@@ -21,12 +21,15 @@ class RegisterRequest extends FormRequest
             'username' => ['required', Rule::unique(User::getTableName())],
             'email' => ['required', 'email', Rule::unique(User::getTableName())],
             'password' => [
-                'required', 'min:8',
+                'required', 'min:8', 'confirmed',
                 Password::min(8)
                     ->letters()
                     ->mixedCase()
                     ->numbers()
             ],
+            'password_confirmation' => [
+                'required', 'min:8'
+            ]
         ];
     }
 
@@ -44,7 +47,12 @@ class RegisterRequest extends FormRequest
             ],
             'password' => [
                 'description' => 'Password of the user',
+                'example' => '1234passWORD'
             ],
+            'password_confirmation' => [
+                'description' => 'Confirmation Password of the user',
+                'example' => '1234passWORD'
+            ]
         ];
     }
 }

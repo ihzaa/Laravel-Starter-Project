@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 servers:
   -
-    url: 'http://192.168.219.178:3000'
+    url: 'http://192.168.118.35:3000'
 paths:
   /api/auth/login:
     post:
@@ -92,11 +92,11 @@ paths:
                 username:
                   type: string
                   description: 'The username of the user.'
-                  example: vel
+                  example: minus
                 password:
                   type: string
                   description: 'The password of the user.'
-                  example: accusamus
+                  example: ratione
               required:
                 - username
                 - password
@@ -169,7 +169,7 @@ paths:
                 refresh_token:
                   type: string
                   description: 'The `refresh_token` from login API.'
-                  example: omnis
+                  example: id
               required:
                 - refresh_token
       security: []
@@ -332,24 +332,29 @@ paths:
                 name:
                   type: string
                   description: 'Name of the user.'
-                  example: quia
+                  example: distinctio
                 username:
                   type: string
                   description: 'Username of the user, used to login.'
-                  example: autem
+                  example: id
                 email:
                   type: string
                   description: 'Email of the user. Must be a valid email address.'
-                  example: margie.price@example.org
+                  example: weimann.amy@example.com
                 password:
                   type: string
                   description: 'Password of the user. Must be at least 8 characters.'
-                  example: ''
+                  example: 1234passWORD
+                password_confirmation:
+                  type: string
+                  description: 'Confirmation Password of the user. Must be at least 8 characters.'
+                  example: 1234passWORD
               required:
                 - name
                 - username
                 - email
                 - password
+                - password_confirmation
       security: []
 tags:
   -

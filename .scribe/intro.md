@@ -10,5 +10,5 @@ You can switch the language used with the tabs at the top right (or from the nav
 > Base URL
 
 ```yaml
-http://192.168.219.178:3000
+http://192.168.118.35:3000
 ```

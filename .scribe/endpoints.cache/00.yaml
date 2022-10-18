@@ -24,14 +24,14 @@ endpoints:
         name: username
         description: 'The username of the user.'
         required: true
-        example: vel
+        example: minus
         type: string
         custom: []
       password:
         name: password
         description: 'The password of the user.'
         required: true
-        example: accusamus
+        example: ratione
         type: string
         custom: []
     responses:
@@ -87,7 +87,7 @@ endpoints:
         name: refresh_token
         description: 'The `refresh_token` from login API.'
         required: true
-        example: omnis
+        example: id
         type: string
         custom: []
     responses:

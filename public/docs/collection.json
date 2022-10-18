@@ -5,12 +5,12 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/192.168.219.178:3000"
+            "value": "http:\/\/192.168.118.35:3000"
         }
     ],
     "info": {
         "name": "Laravel-Starter-Project",
-        "_postman_id": "c8e6de2d-4660-41d7-9504-f59d918cb54b",
+        "_postman_id": "d5b84666-8e83-4af1-921e-f19a0af811e3",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -41,7 +41,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"username\":\"vel\",\"password\":\"accusamus\"}"
+                            "raw": "{\"username\":\"minus\",\"password\":\"ratione\"}"
                         },
                         "description": "API for logged in a user.",
                         "auth": {
@@ -97,7 +97,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"refresh_token\":\"omnis\"}"
+                            "raw": "{\"refresh_token\":\"id\"}"
                         },
                         "description": "Refresh access token when expired.",
                         "auth": {
@@ -267,7 +267,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"quia\",\"username\":\"autem\",\"email\":\"margie.price@example.org\",\"password\":\"\"}"
+                            "raw": "{\"name\":\"distinctio\",\"username\":\"id\",\"email\":\"weimann.amy@example.com\",\"password\":\"1234passWORD\",\"password_confirmation\":\"1234passWORD\"}"
                         },
                         "description": "API for register a user.",
                         "auth": {
