@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     @php
-    $breadcrumbs = ['Pengaturan User', ['Perizinan', route('admin.user_config.permission.index')], 'Tambah'];
+        $breadcrumbs = ['Pengaturan User', ['Perizinan', route('admin.user_config.permission.index')], 'Tambah'];
     @endphp
-    @include('layouts.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
+    @include('layouts.parts.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 @endsection
 
 @push('styles')
@@ -29,8 +29,8 @@
                     <div class="card-body">
                         <div class="form-group mb-2">
                             <label for="name">Nama Peran<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" placeholder="Nama Peran" name="name"
-                                value="{{ old('name') }}">
+                            <input type="text" class="form-control" id="name" placeholder="Nama Peran"
+                                name="name" value="{{ old('name') }}">
                         </div>
                         <hr>
                         <h3>Perizinan Spesial</h3>
@@ -60,7 +60,6 @@
 
                                 <?php $index = 0; ?>
                                 @foreach (\App\Utils\PermissionHelper::SPECIAL_PERMISSIONS as $perm => $description)
-
                                     <tr data-section="specials">
                                         <td>{{ ++$index }}</td>
                                         <td>{{ ucwords(str_replace('_', ' ', $perm)) }}</td>
@@ -75,7 +74,6 @@
                                             </div>
                                         </td>
                                     </tr>
-
                                 @endforeach
 
                             </tbody>
@@ -86,77 +84,75 @@
                             <tbody>
 
                                 @foreach (App\Utils\PermissionHelper::PERMISSIONS as $section => $perms)
-
-                                    <tr class="bg-gray-50">
-                                        <th colspan="{{ count(App\Utils\PermissionHelper::ACTIONS) + 1 }}"
-                                            class="text-right">Select/Unselect Section</th>
-                                        <th class="text-center">
-                                            <div class="checkbox c-checkbox" style="display: inline-block; margin: 0 5px;">
-                                                <label>
-                                                    <input type="checkbox" class="toggle-section"
-                                                        data-section="{{ $section }}" />
-
-                                                </label>
-                                            </div>
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                    <tr class="bg-gray-50">
-                                        <th colspan="2">{{ strtoupper(str_replace('_', ' ', $section)) }}</th>
-                                        @foreach (App\Utils\PermissionHelper::ACTIONS as $act)
-                                            <th class="text-center">
-                                                <div class="checkbox c-checkbox"
-                                                    style="display: inline-block; margin: 0 5px;">
-                                                    <label>
-                                                        <input type="checkbox" class="toggle-column"
-                                                            data-column="{{ $act }}"
-                                                            data-section="{{ $section }}" />
-
-                                                    </label>
-                                                </div>
-                                            </th>
-                                        @endforeach
-                                        <th></th>
-                                    </tr>
-
                                     <tr class="bg-gray-50">
                                         <th>#</th>
                                         <th>Modul</th>
-                                        @foreach (App\Utils\PermissionHelper::ACTIONS as $act)
-                                            <th class="text-center">{{ ucwords($act) }}</th>
-                                        @endforeach
-                                        <th></th>
+                                        <th colspan="99" class="text-center">Permission</th>
                                     </tr>
 
                                     @foreach ($perms as $index => $perm)
-
                                         <tr data-section="{{ $section }}">
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ ucwords(str_replace('_', ' ', $perm)) }}</td>
-                                            @foreach (App\Utils\PermissionHelper::ACTIONS as $act)
-                                                <td class="text-center">
-                                                    <div class="checkbox c-checkbox">
-                                                        <label>
-                                                            <input name="permissions[]" type="checkbox"
-                                                                value="{{ $act }} {{ $perm }}"
-                                                                class="{{ $act }}" />
-
-                                                        </label>
-                                                    </div>
+                                            @if (gettype($perm) === 'string')
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ ucwords(str_replace('_', ' ', $perm)) }}</td>
+                                                @foreach (App\Utils\PermissionHelper::ACTIONS as $act)
+                                                    <td class="text-center">
+                                                        <div class="checkbox c-checkbox">
+                                                            <label>
+                                                                {{ $act }}
+                                                                <input name="permissions[]" type="checkbox"
+                                                                    value="{{ $act }} {{ $perm }}"
+                                                                    class="{{ $act }}" />
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                @endforeach
+                                            @else
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>
+                                                    {{ $perm['alias'] ?? $perm['name'] }}
+                                                    <u><small
+                                                            class="text-muted">{{ $perm['description'] ?? '' }}</small></u>
                                                 </td>
-                                            @endforeach
-                                            <td class="text-center">
+                                                @if (isset($perm['actions']))
+                                                    @foreach ($perm['actions'] as $act)
+                                                        <td class="text-center">
+                                                            <div class="checkbox c-checkbox">
+                                                                <label>
+                                                                    {{ $act }}
+                                                                    <input name="permissions[]" type="checkbox"
+                                                                        value="{{ $act }} {{ $perm['name'] }}"
+                                                                        class="{{ $act }}" />
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    @endforeach
+                                                @else
+                                                    @foreach (App\Utils\PermissionHelper::ACTIONS as $act)
+                                                        <td class="text-center">
+                                                            <div class="checkbox c-checkbox">
+                                                                <label>
+                                                                    {{ $act }}
+                                                                    <input name="permissions[]" type="checkbox"
+                                                                        value="{{ $act }} {{ $perm['name'] }}"
+                                                                        class="{{ $act }}" />
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    @endforeach
+                                                @endif
+                                            @endif
+                                            <td class="text-right" colspan="99">
                                                 <div class="checkbox c-checkbox"
                                                     style="display: inline-block; margin: 0 5px;">
                                                     <label>
+                                                        <small>SELECT ALL</small>
                                                         <input type="checkbox" class="toggle-row" />
                                                     </label>
                                                 </div>
                                             </td>
                                         </tr>
-
                                     @endforeach
-
                                 @endforeach
 
                             </tbody>

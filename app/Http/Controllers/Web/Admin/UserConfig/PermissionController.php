@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Admin\UserConfig;
 
 use App\Http\Controllers\Controller;
 use App\Utils\FlashMessageHelper;
+use App\Utils\PermissionHelper;
 use App\Utils\ValidationHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -91,6 +92,19 @@ class PermissionController extends Controller
 
     public function createGet()
     {
+        $data['longest_actions'] = count(PermissionHelper::ACTIONS);
+        $permissions = PermissionHelper::PERMISSIONS;
+        foreach ($permissions as $permission) {
+            foreach ($permission as $permission_name) {
+                if (gettype($permission_name) === 'array') {
+                    if (isset($permission_name['actions'])) {
+                        if ($data['longest_actions'] < count($permission_name['actions'])) {
+                            $data['longest_actions'] = count($permission_name['actions']);
+                        }
+                    }
+                }
+            }
+        }
         $data['permission'] = Permission::get();
         return view('admin.pages.user_configuration.permission.create', compact('data'));
     }
