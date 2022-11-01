@@ -8,6 +8,7 @@ use App\Utils\PermissionHelper;
 use App\Utils\ValidationHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -45,11 +46,12 @@ class PermissionController extends Controller
 
     public function update($id, Request $request)
     {
+        $role = Role::findOrFail($id);
         $validator = ValidationHelper::validate(
             $request,
             [
                 'permissions' => 'required|array',
-                'name' => 'required'
+                'name' => ['required', Rule::unique($role->getTable())]
             ],
             [],
             ['name' => 'Nama Peran']
@@ -58,7 +60,6 @@ class PermissionController extends Controller
             return ValidationHelper::validationError($validator);
         }
 
-        $role = Role::find($id);
         $role->name = $request->name;
 
         foreach ($request->permissions as $permission) {
@@ -111,11 +112,12 @@ class PermissionController extends Controller
 
     public function createPost(Request $request)
     {
+        $role = new Role();
         $validator = ValidationHelper::validate(
             $request,
             [
                 'permissions' => 'required|array',
-                'name' => 'required|unique:permissions'
+                'name' => ['required', Rule::unique($role->getTable())]
             ],
             [],
             ['name' => 'Nama Peran']
