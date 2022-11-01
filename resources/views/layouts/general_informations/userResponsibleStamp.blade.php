@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                Aktifitas Bersangkutan
+                User Stamp
             </div>
             <div class="card-body">
                 <table class="table table-bordered">

@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -111,4 +111,5 @@
             </div>
         </div>
     </div>
+    @include('layouts.general_informations.userResponsibleStamp', ['data' => $data['obj']])
 @endsection
