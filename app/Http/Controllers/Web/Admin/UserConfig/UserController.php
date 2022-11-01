@@ -149,4 +149,17 @@ class UserController extends Controller
 
         return redirect(route('admin.user_config.user.show', ['id' => $id]));
     }
+
+    public function loginAsUser($id)
+    {
+        $user = User::findOrFail($id);
+        // logout
+        auth()->logout();
+        // login sebagai user yg dipilih
+        auth()->loginUsingId($user->id);
+        FlashMessageHelper::bootstrapSuccessAlert('Login sebagai user berhasil!');
+        // if ($user->user_type == 1)
+        $route = (route('admin.dashboard.index'));
+        return redirect($route);
+    }
 }

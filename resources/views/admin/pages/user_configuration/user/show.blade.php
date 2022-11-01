@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     @php
-    $breadcrumbs = ['Pengaturan User', ['User', route('admin.user_config.user.index')], 'Lihat'];
+        $breadcrumbs = ['Pengaturan User', ['User', route('admin.user_config.user.index')], 'Lihat'];
     @endphp
-    @include('layouts.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
+    @include('layouts.parts.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 @endsection
 
 @section('content')
@@ -22,18 +22,18 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Nama User <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama User..."
-                                value="{{ $data['obj']->name }}">
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Nama User..." value="{{ $data['obj']->name }}">
                         </div>
                         <div class="form-group">
                             <label for="username">Username User <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="username" readonly placeholder="Username User..."
-                                value="{{ $data['obj']->username }}">
+                            <input type="text" class="form-control" id="username" readonly
+                                placeholder="Username User..." value="{{ $data['obj']->username }}">
                         </div>
                         <div class="form-group">
                             <label for="email">Email User <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email User..."
-                                value="{{ $data['obj']->email }}">
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Email User..." value="{{ $data['obj']->email }}">
                         </div>
                         <div class="form-group">
                             <label for="password">Password User <span class="text-danger">*</span></label>
@@ -64,7 +64,8 @@
                         <div class="form-group">
                             <label for="role">Peran User <span class="text-danger">*</span></label>
                             <select class="form-control" id="role" name="role">
-                                <option value="" disabled @if (count($data['user_role']) == 0) selected @endif>Pilih Peran
+                                <option value="" disabled @if (count($data['user_role']) == 0) selected @endif>Pilih
+                                    Peran
                                     User...</option>
                                 @foreach ($data['roles'] as $k => $v)
                                     <option value="{{ $k }}"
@@ -75,27 +76,37 @@
                             </select>
                         </div>
                     </div>
-                    <div class="card-footer text-muted text-center">
-                        @if ($data['obj']->trashed())
-                            @can('restore Pengaturan_User_User')
-                                <a class="btn btn-danger btn-info"
-                                    href="{{ route('admin.user_config.user.restore', ['id' => $data['obj']->id]) }}"
-                                    data-toggle="tooltip" data-placement="top" title="Hapus"
-                                    onclick="return confirm('Yakin Mengembalikan?')"><i class="far fa-trash-alt"></i>
-                                    Kembalikan</a>
-                            @endcan
-                        @else
-                            @can('user Pengaturan_User_User')
-                                <button class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-                            @endcan
-                            @can('delete Pengaturan_User_User')
-                                <a class="btn btn-danger btn-delete"
-                                    href="{{ route('admin.user_config.user.delete', ['id' => $data['obj']->id]) }}"
-                                    data-toggle="tooltip" data-placement="top" title="Hapus"
-                                    onclick="return confirm('Yakin Menghapus?')"><i class="far fa-trash-alt"></i> Hapus</a>
-                            @endcan
-                        @endif
-                    </div>
+                    @if ($data['obj']->id !== auth()->user()->id)
+                        <div class="card-footer text-muted text-center">
+                            @if ($data['obj']->trashed())
+                                @can('restore Pengaturan_User_User')
+                                    <a class="btn btn-danger btn-info"
+                                        href="{{ route('admin.user_config.user.restore', ['id' => $data['obj']->id]) }}"
+                                        data-toggle="tooltip" data-placement="top" title="Hapus"
+                                        onclick="return confirm('Yakin Mengembalikan?')"><i class="far fa-trash-alt"></i>
+                                        Kembalikan</a>
+                                @endcan
+                            @else
+                                @can('user Pengaturan_User_User')
+                                    <button class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+                                @endcan
+                                @can('delete Pengaturan_User_User')
+                                    <a class="btn btn-danger btn-delete"
+                                        href="{{ route('admin.user_config.user.delete', ['id' => $data['obj']->id]) }}"
+                                        data-toggle="tooltip" data-placement="top" title="Hapus"
+                                        onclick="return confirm('Yakin Menghapus?')"><i class="far fa-trash-alt"></i> Hapus</a>
+                                @endcan
+                                @can('Super-Admin')
+                                    <a class="btn btn-warning"
+                                        href="{{ route('admin.user_config.user.login.as.user', ['id' => $data['obj']->id]) }}"
+                                        data-toggle="tooltip" data-placement="top"
+                                        title="Login Sebagai {{ $data['obj']->name }}"
+                                        onclick="return confirm('Yakin Login Sebagai {{ $data['obj']->name }}')"><i
+                                            class="fa fa-key"></i> Login</a>
+                                @endcan
+                            @endif
+                        </div>
+                    @endif
                 </form>
             </div>
         </div>

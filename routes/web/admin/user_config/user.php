@@ -23,4 +23,6 @@ Route::prefix('admin/user_config/user')->name('admin.user_config.user.')->middle
     Route::middleware(['permission:restore ' . $permission])->group(function () {
         Route::get('restore/{id}', [UserController::class, 'restore'])->name('restore');
     });
+    Route::middleware(['permission:Super-Admin'])
+        ->get('login/{id}', [UserController::class, 'loginAsUser'])->name('login.as.user');
 });
