@@ -14,12 +14,12 @@
 @endpush
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <form action="{{ route('admin.user_config.permission.update', [$data['role']->id]) }}" method="POST">
+    <form action="{{ route('admin.user_config.permission.update', [$data['role']->id]) }}" method="POST">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-header">
-                        Perizinan <strong>{{ $data['role']->name }}</strong>
+                        Edit Perizinan
                         <div class="card-tools">
 
                         </div>
@@ -42,12 +42,14 @@
                             <tbody>
 
                                 <tr class="bg-gray-50">
-                                    <th colspan="4" class="text-right">
+                                    <th colspan="3" class="text-right">
                                         Select/Unselect Section
-                                        <div class="checkbox c-checkbox" style="display: inline-block; margin: 0 5px;">
-                                            <label>
-                                                <input type="checkbox" class="toggle-section" data-section="specials" />
-
+                                    </th>
+                                    <th class="text-center">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input toggle-section"
+                                                data-section="specials" id="select-all-spesial-permission" />
+                                            <label class="custom-control-label" for="select-all-spesial-permission">
                                             </label>
                                         </div>
                                     </th>
@@ -68,122 +70,115 @@
                                         <td>{{ $description }}</td>
                                         <?php $hasPerm = in_array($perm, $permissions); ?>
                                         <td class="text-center">
-                                            <div class="checkbox c-checkbox">
-                                                <label>
-                                                    <input name="permissions[]" type="checkbox" value="{{ $perm }}"
-                                                        {{ $hasPerm ? 'checked=""' : '' }} />
-
-                                                </label>
+                                            <div class="custom-control custom-switch">
+                                                <input name="permissions[]" type="checkbox" value="{{ $perm }}"
+                                                    class="custom-control-input toggle-row" id="select-{{ $perm }}"
+                                                    {{ $hasPerm ? 'checked=""' : '' }} />
+                                                <label class="custom-control-label"
+                                                    for="select-{{ $perm }}"></label>
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
-                        <hr>
-                        <table class="table table-bordered table-hover">
-                            <tbody>
-                                @foreach (App\Utils\PermissionHelper::PERMISSIONS as $section => $perms)
-                                    <tr class="bg-gray-50">
-                                        <th>#</th>
-                                        <th>Modul</th>
-                                        <th colspan="99" class="text-center">Permission</th>
+                    </div>
+                </div>
+                @foreach (App\Utils\PermissionHelper::PERMISSIONS as $section => $perms)
+                    <div class="card my-3">
+                        <div class="card-header">
+                            {{ str_replace('_', ' ', $section) }}
+                        </div>
+                        <div class="card-body">
+
+                            <table class="js-table-sections table table-hover table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 30px;"></th>
+                                        <th>Nama</th>
+                                        <th>Deskripsi</th>
+                                        <th style="width: 15%">Jumlah Aksi</th>
+                                        <th style="width: 15%">Jumlah Aksi Aktif</th>
+                                        <th>Pilih Semua</th>
                                     </tr>
-                                    @foreach ($perms as $index => $perm)
-                                        <tr data-section="{{ $section }}">
-                                            @if (gettype($perm) === 'string')
-                                                <td>{{ $index + 1 }}</td>
-                                                <td>{{ ucwords(str_replace('_', ' ', $perm)) }}</td>
-                                                @foreach (App\Utils\PermissionHelper::ACTIONS as $act)
-                                                    <?php $hasPerm = in_array($act . ' ' . $perm, $permissions); ?>
-                                                    <td class="text-center">
-                                                        <div class="checkbox c-checkbox">
-                                                            <label>
-                                                                {{ $act }}
-                                                                <input name="permissions[]" type="checkbox"
-                                                                    value="{{ $act }} {{ $perm }}"
-                                                                    class="{{ $act }}"
-                                                                    {{ $hasPerm ? 'checked=""' : '' }} />
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                @endforeach
-                                            @else
-                                                <td>{{ $index + 1 }}</td>
-                                                <td>
-                                                    {{ $perm['alias'] ?? $perm['name'] }}
-                                                    <u><small
-                                                            class="text-muted">{{ $perm['description'] ?? '' }}</small></u>
-                                                </td>
-                                                @if (isset($perm['actions']))
-                                                    @foreach ($perm['actions'] as $act)
-                                                        <?php $hasPerm = in_array($act . ' ' . $perm['name'], $permissions); ?>
-                                                        <td class="text-center">
-                                                            <div class="checkbox c-checkbox">
-                                                                <label>
-                                                                    {{ $act }}
-                                                                    <input name="permissions[]" type="checkbox"
-                                                                        value="{{ $act }} {{ $perm['name'] }}"
-                                                                        class="{{ $act }}"
-                                                                        {{ $hasPerm ? 'checked=""' : '' }} />
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                    @endforeach
-                                                @else
-                                                    @foreach (App\Utils\PermissionHelper::ACTIONS as $act)
-                                                        <?php $hasPerm = in_array($act . ' ' . $perm['name'], $permissions); ?>
-                                                        <td class="text-center">
-                                                            <div class="checkbox c-checkbox">
-                                                                <label>
-                                                                    {{ $act }}
-                                                                    <input name="permissions[]" type="checkbox"
-                                                                        value="{{ $act }} {{ $perm['name'] }}"
-                                                                        class="{{ $act }}"
-                                                                        {{ $hasPerm ? 'checked=""' : '' }} />
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                    @endforeach
-                                                @endif
-                                            @endif
-                                            <td class="text-right" colspan="99">
-                                                <div class="checkbox c-checkbox"
-                                                    style="display: inline-block; margin: 0 5px;">
-                                                    <label>
-                                                        <small>SELECT ALL</small>
-                                                        <input type="checkbox" class="toggle-row" />
-                                                    </label>
+                                </thead>
+                                @foreach ($perms as $item)
+                                    @php
+                                        $actions = gettype($item) !== 'string' ? $item['actions'] ?? App\Utils\PermissionHelper::ACTIONS : App\Utils\PermissionHelper::ACTIONS;
+                                        $name = gettype($item) !== 'string' ? $item['name'] : $item;
+                                        $aliases = gettype($item) !== 'string' ? $item['alias'] ?? $item['name'] : $item;
+                                        $description = gettype($item) !== 'string' ? $item['description'] ?? '-' : '-';
+                                    @endphp
+                                    <tbody class="js-table-sections-header">
+                                        <tr>
+                                            <td class="text-center">
+                                                <i class="fa fa-angle-right text-muted"></i>
+                                            </td>
+                                            <td>{{ str_replace('_', ' ', $aliases) }}</td>
+                                            <td>{{ $description }}</td>
+                                            <td class="text-center"> {{ count($actions) }}</td>
+                                            <td class="text-center" id="action-active-counter-{{ $name }}">
+                                                {{ count(preg_grep('/.* ' . $name . "$/", $permissions)) }}
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input toggle-row"
+                                                        id="select-all-{{ $name }}-{{ $loop->iteration }}"
+                                                        data-permission-name="{{ $name }}"
+                                                        data-actions-count="{{ count($actions) }}"
+                                                        @if (count(preg_grep('/.* ' . $name . "$/", $permissions)) === count($actions)) checked="" @endif />
+                                                    <label class="custom-control-label"
+                                                        for="select-all-{{ $name }}-{{ $loop->iteration }}"></label>
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    </tbody>
+                                    <tbody class="font-size-sm">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Nama Aksi</th>
+                                        </tr>
+                                        @foreach ($actions as $action)
+                                            <?php $hasPerm = in_array($action . ' ' . $name, $permissions); ?>
+                                            <tr>
+                                                <th>{{ $loop->iteration }}</th>
+                                                <th>
+                                                    <div class="custom-control custom-switch">
+                                                        <input name="permissions[]"
+                                                            value="{{ $action }} {{ $name }}"
+                                                            {{ $hasPerm ? 'checked=""' : '' }} type="checkbox"
+                                                            class="custom-control-input action-switch"
+                                                            data-permission-name="{{ $name }}"
+                                                            id="select-{{ $name }}-{{ $loop->iteration }}" />
+                                                        <label class="custom-control-label"
+                                                            for="select-{{ $name }}-{{ $loop->iteration }}">{{ $action }}</label>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 @endforeach
-
-                            </tbody>
-                        </table>
+                            </table>
+                        </div>
                     </div>
-                    <div class="card-footer d-flex">
-                        @can('update Pengaturan_User_Perizinan')
-                            <button class="btn btn-primary ml-auto mr-2" type="submit"><i class="fa fa-check"
-                                    aria-hidden="true"></i>
-                                Simpan</button>
-                        @endcan
-
-                        @can('delete Pengaturan_User_Perizinan')
-                            @if ($data['role']->id != 2)
-                                <a class="btn btn-danger mr-auto" onclick="return confirm('Yakin menghapus?')"
-                                    href="{{ route('admin.user_config.permission.delete', ['id' => $data['role']->id]) }}"><i
-                                        class="fa fa-trash" aria-hidden="true"></i>
-                                    Hapus</a>
-                            @endif
-                        @endcan
-                    </div>
-                </form>
+                @endforeach
             </div>
+            @can('update Pengaturan_User_Perizinan')
+                <button class="btn btn-primary ml-auto mr-2" type="submit"><i class="fa fa-check" aria-hidden="true"></i>
+                    Simpan</button>
+            @endcan
+
+            @can('delete Pengaturan_User_Perizinan')
+                @if ($data['role']->id != 2)
+                    <a class="btn btn-danger mr-auto" onclick="return confirm('Yakin menghapus?')"
+                        href="{{ route('admin.user_config.permission.delete', ['id' => $data['role']->id]) }}"><i
+                            class="fa fa-trash" aria-hidden="true"></i>
+                        Hapus</a>
+                @endif
+            @endcan
         </div>
-    </div>
+    </form>
+
 @endsection
 
 @push('scripts')
@@ -193,8 +188,27 @@
 
 @push('scripts')
     <script>
+        jQuery(function() {
+            One.helpers(['table-tools-sections']);
+        });
+    </script>
+    <script>
         $(function() {
-
+            function getActionActiveCounterElement(el) {
+                let permission_name = $(el).data('permission-name');
+                let $action_active_counter = $("#action-active-counter-" + permission_name);
+                return $action_active_counter;
+            }
+            $(".action-switch").change(function() {
+                let $action_active_counter = getActionActiveCounterElement(this);
+                let current_count = parseInt($action_active_counter.html());
+                if (this.checked) {
+                    current_count++;
+                } else {
+                    current_count--;
+                }
+                $action_active_counter.html(current_count)
+            })
             $(".full").change(function() {
                 var $this = $(this);
                 var tr = $this.closest('tr');
@@ -235,12 +249,15 @@
             });
 
             $(".toggle-row").change(function() {
+                let $action_active_counter = getActionActiveCounterElement(this);
                 var $this = $(this);
-                var $tr = $this.closest('tr');
+                var $nextTbody = $this.closest('tbody').next();
                 if (this.checked) {
-                    $tr.find('input[type="checkbox"]').prop('checked', true);
+                    $action_active_counter.html($(this).data('actions-count'));
+                    $nextTbody.find('input[type="checkbox"]').prop('checked', true);
                 } else {
-                    $tr.find('input[type="checkbox"]').prop('checked', false);
+                    $action_active_counter.html(0);
+                    $nextTbody.find('input[type="checkbox"]').prop('checked', false);
                 }
             });
 

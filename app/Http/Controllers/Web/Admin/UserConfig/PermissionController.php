@@ -51,7 +51,7 @@ class PermissionController extends Controller
             $request,
             [
                 'permissions' => 'required|array',
-                'name' => ['required', Rule::unique($role->getTable())]
+                'name' => ['required', Rule::unique($role->getTable())->ignore($role)]
             ],
             [],
             ['name' => 'Nama Peran']
@@ -79,7 +79,7 @@ class PermissionController extends Controller
 
         FlashMessageHelper::bootstrapSuccessAlert('Berhasil merubah perizian ' . $request->name . '!');
 
-        return redirect(route('admin.user_config.permission.index'));
+        return redirect(route('admin.user_config.permission.show', ['id' => $id]));
     }
 
     public function delete($id)
@@ -147,6 +147,6 @@ class PermissionController extends Controller
 
         FlashMessageHelper::bootstrapSuccessAlert('Berhasil menambahkan perizian ' . $request->name . '!');
 
-        return redirect(route('admin.user_config.permission.index'));
+        return redirect(route('admin.user_config.permission.show', ['id' => $role->id]));
     }
 }
