@@ -52,3 +52,4 @@ let { stdout: stdout3 } = await sh(`git push `);
 for (let line of stdout3.split('\n')) {
     console.log(`${line}`);
 }
+console.log(chalk.bold.bgWhite.green('PUSH SUCCESS!!!'))
