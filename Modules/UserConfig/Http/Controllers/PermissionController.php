@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Admin\UserConfig;
+namespace Modules\UserConfig\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Utils\FlashMessageHelper;
@@ -30,7 +30,7 @@ class PermissionController extends Controller
                 ->make(true);
         }
 
-        return view('admin.pages.user_configuration.permission.index');
+        return view('userconfig::permission.index');
     }
 
     public function show($id)
@@ -41,7 +41,7 @@ class PermissionController extends Controller
             ->pluck('name', 'id');
         $data['permission'] = Permission::get();
 
-        return view('admin.pages.user_configuration.permission.show', compact('data'));
+        return view('userconfig::permission.show', compact('data'));
     }
 
     public function update($id, Request $request)
@@ -107,7 +107,7 @@ class PermissionController extends Controller
             }
         }
         $data['permission'] = Permission::get();
-        return view('admin.pages.user_configuration.permission.create', compact('data'));
+        return view('userconfig::permission.create', compact('data'));
     }
 
     public function createPost(Request $request)

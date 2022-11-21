@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Admin\UserConfig;
+namespace Modules\UserConfig\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -41,14 +41,14 @@ class UserController extends Controller
                 ->make(true);
         }
         $data['model'] = User::class;
-        return view('admin.pages.user_configuration.user.index', compact('data'));
+        return view('userconfig::user.index', compact('data'));
     }
 
     public function createGet()
     {
         $data['roles'] = Role::get();
         $data['user_type'] = User::user_type;
-        return view('admin.pages.user_configuration.user.create', compact('data'));
+        return view('userconfig::user.create', compact('data'));
     }
 
     public function createPost(Request $request)
@@ -94,7 +94,7 @@ class UserController extends Controller
         $data['roles'] = Role::pluck('name', 'id');
         $data['user_role'] = $data['obj']->getRoleNames();
         $data['user_type'] = User::user_type;
-        return view('admin.pages.user_configuration.user.show', compact('data'));
+        return view('userconfig::user.show', compact('data'));
     }
 
     public function update($id, Request $request)

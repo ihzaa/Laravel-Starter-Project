@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\Web\Admin\UserConfig\UserController;
 use Illuminate\Support\Facades\Route;
-
+use Modules\UserConfig\Http\Controllers\UserController;
 
 $permission = 'Pengaturan_User_User';
 Route::prefix('admin/user_config/user')->name('admin.user_config.user.')->middleware(['auth', 'user_type:Admin'])->group(function () use ($permission) {
