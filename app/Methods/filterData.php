@@ -29,13 +29,17 @@ if (!function_exists('filterData')) {
                         if (strpos($column, '.') !== false) {
                             if ($operator == 'l')
                                 $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
-                            else
-                                $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                            else {
+                                if ($value)
+                                    $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                            }
                         } else {
                             if ($operator == 'l')
                                 $q->where($column, optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
-                            else
-                                $q->where($column, optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                            else {
+                                if ($value)
+                                    $q->where($column, optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                            }
                         }
                     }
                 }

@@ -18,7 +18,7 @@
                 serverSide: true,
                 searching: false,
                 ajax: {
-                    "url": options.url,
+                    "url": url,
                     "data": datatable_ajax_data
                 },
                 columns: [{
