@@ -71,24 +71,10 @@
 @push('scripts')
     <script>
         $(function() {
-            let table = $('#main-table').DataTable({
-                bSortCellsTop: true,
-                processing: true,
-                serverSide: true,
-                searching: false,
-                order: [3, 'desc'],
-                ajax: {
-                    "url": '{!! url()->full() !!}',
-                    "data": datatable_ajax_data
-                },
-                columns: [{
-                        "data": null,
-                        "sortable": false,
-                        render: function(data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
-                    },
-                    {
+            init_serverside_datatable(
+                '#main-table',
+                '{!! url()->full() !!}',
+                [{
                         data: 'name',
                     },
                     {
@@ -106,8 +92,10 @@
                         sortable: false,
                         className: "text-center"
                     }
-                ]
-            });
+                ], {
+                    order: [3, 'desc'],
+                }
+            );
         });
     </script>
 @endpush

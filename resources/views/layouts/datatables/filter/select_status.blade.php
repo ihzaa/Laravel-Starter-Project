@@ -1,4 +1,4 @@
-<select class="datatable-filter datatable-filter-select form-control" name="deleted_at[is]">
+<select class="datatable-filter datatable-filter-select form-control" name="deleted_at[is]" data-target="datatable-filter">
     <option value="NULL" selected>Aktif</option>
     <option value="NOT NULL">Dihapus</option>
 </select>

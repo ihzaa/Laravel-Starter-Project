@@ -1,4 +1,5 @@
-<select class="datatable-filter datatable-filter-select form-control" name="{{ $name }}">
+<select class="datatable-filter datatable-filter-select form-control" name="{{ $name }}"
+    data-target="datatable-filter">
     <option value="" selected>-- Semua --</option>
     @foreach ($options as $k => $v)
         <option value="{{ $k }}">{{ $v }}

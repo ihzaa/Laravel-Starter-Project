@@ -1,5 +1,5 @@
 <input class="datatable-filter form-control" name="{{ $name }}"
-    placeholder="{{ isset($placeholder) ? $placeholder : 'cari...' }}">
+    placeholder="{{ isset($placeholder) ? $placeholder : 'cari...' }}" data-target="datatable-filter">
 @once
     @push('scripts')
         <script>

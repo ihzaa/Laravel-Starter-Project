@@ -1,5 +1,5 @@
 <div class="input-group">
-    <input name="{{ $name }}" class="form-control datatable-filter datatable-filter-date-picker"
+    <input name="{{ $name }}" class="form-control datatable-filter-date-picker" data-target="datatable-filter"
         placeholder="{{ isset($placeholder) ? $placeholder : 'cari...' }}" autocomplete="off"
         data-date-format="{{ isset($date_format) ? $date_format : 'dd-mm-yyyy' }}">
 </div>
@@ -16,16 +16,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
             integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.2.1/luxon.min.js"
+            integrity="sha512-pyR2hpC7bLig9Ub4eUIOC/BAO4anpdt7jhpF4dfrPv+qIg+KWztdVjFPCRCsRaWVfUylUCvrrxqMFNrJBdQIjQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
             $(document).ready(() => {
-                let timer;
-                $('.datatable-filter-date-picker').on('change', function() {
-                    let tableId = "#{{ isset($table_id) ? $table_id : '' }}";
-                    if (tableId == '#') {
-                        tableId = "#main-table"
-                    }
-                    $(tableId).DataTable().draw();
-                });
+                @include('layouts.datatables.filter.js_datepicker')
+
                 $('.datatable-filter-date-picker').datepicker({
                     autoclose: true,
                     todayHighlight: true
