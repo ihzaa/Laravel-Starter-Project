@@ -13,6 +13,16 @@ use Carbon\Carbon;
 class BaseModel extends Model
 {
     use HasFactory,  CanGetTableNameStatically, UserStamp, SoftDeletes;
+    const OPERATORS = [
+        'e' => '=',
+        'ne' => '!=',
+        'gt' => '>',
+        'gte' => '>=',
+        'lt' => '<',
+        'lte' => '<=',
+        'l' => 'LIKE',
+        'is' => 'IS',
+    ];
 
     // this can make vulnerability
     // protected $guarded = [];

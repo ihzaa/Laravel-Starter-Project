@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     @php
-    $breadcrumbs = ['Pengaturan User', ['User', route('admin.user_config.user.index')]];
+        $breadcrumbs = ['Pengaturan User', ['User', route('admin.user_config.user.index')]];
     @endphp
     @include('layouts.parts.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 @endsection
@@ -17,8 +17,8 @@
                     List User
                     <div class="card-tools">
                         @can('create Pengaturan_User_User')
-                            <a class="btn btn-primary" href="{{ route('admin.user_config.user.createGet') }}"><i
-                                    class="fa fa-plus" aria-hidden="true"></i> Tambah</a>
+                            <a class="btn btn-primary" href="{{ route('admin.user_config.user.createGet') }}"><i class="fa fa-plus"
+                                    aria-hidden="true"></i> Tambah</a>
                         @endcan
                     </div>
                     <!-- /.card-tools -->
@@ -36,13 +36,25 @@
                             </tr>
                             <tr>
                                 <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
                                 <th>
-                                    @include('layouts.data_tables.th_status', [
-                                        'model' => $data['model'],
+                                    @include('layouts.datatables.filter.input', [
+                                        'name' => 'name[l]',
+                                        'placeholder' => 'nama...',
                                     ])
+                                </th>
+                                <th>
+                                    @include('layouts.datatables.filter.input', [
+                                        'name' => 'emial[l]',
+                                        'placeholder' => 'email...',
+                                    ])
+                                </th>
+                                <th>
+                                    @include('layouts.datatables.filter.datepicker', [
+                                        'name' => 'created_at[l]',
+                                    ])
+                                </th>
+                                <th>
+                                    @include('layouts.datatables.filter.select_status')
                                 </th>
                                 <th></th>
                             </tr>
@@ -60,33 +72,38 @@
     <script>
         $(function() {
             let table = $('#main-table').DataTable({
+                bSortCellsTop: true,
                 processing: true,
                 serverSide: true,
-                ajax: '{!! url()->full() !!}',
+                searching: false,
+                order: [3, 'desc'],
+                ajax: {
+                    "url": '{!! url()->full() !!}',
+                    "data": datatable_ajax_data
+                },
                 columns: [{
-                        data: 'id',
-                        name: 'id',
+                        "data": null,
+                        "sortable": false,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
                     },
                     {
                         data: 'name',
-                        name: 'name'
                     },
                     {
                         data: 'email',
-                        name: 'email'
                     },
                     {
                         data: 'created_at',
-                        name: 'created_at'
                     },
                     {
                         data: 'status',
-                        name: 'status',
                         sortable: false
                     },
                     {
                         data: 'action',
-                        name: 'action',
+                        sortable: false,
                         className: "text-center"
                     }
                 ]

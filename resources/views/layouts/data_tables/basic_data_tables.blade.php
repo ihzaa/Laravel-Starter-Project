@@ -4,4 +4,11 @@
 @push('scripts')
     <script src="{{ asset('AdminLTE-3.1.0/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3.1.0') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        const datatable_ajax_data = (d) => {
+            $('.datatable-filter').each((i, element) => {
+                d[$(element).attr('name')] = $(element).val();
+            });
+        }
+    </script>
 @endpush

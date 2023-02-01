@@ -19,11 +19,16 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            if (request()->has('deleted')) {
-                $query = User::onlyTrashed();
-            } else {
-                $query = User::query();
-            }
+            $validated = $request->validate([
+                'name' => 'nullable|array',
+                'email' => 'nullable|array',
+                'created_at' => 'nullable|array',
+                'created_at.*' => 'nullable|date_format:d-m-Y',
+                'deleted_at' => 'nullable|array'
+            ]);
+            $query = User::when($validated != [], function ($q) use ($validated) {
+                filterData($q, $validated);
+            });
             return datatables()->of($query)
                 ->addColumn('status', function ($obj) {
                     if ($obj->trashed()) {
