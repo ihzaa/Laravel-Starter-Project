@@ -17,7 +17,29 @@ if (!function_exists('filterData')) {
             foreach ($operators as $operator => $value) {
                 try {
                     $value = LocalCarbon::createFromFormat('d-m-Y', $value);
-                    $q->whereDate($column, optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                    if (strpos($column, '.') !== false) {
+                        if (count(explode('.', $column)) > 2) {
+                            $relation = '';
+                            $serachColumn = '';
+                            foreach (explode('.', $column) as $k => $single_column) {
+                                if ($k == (count(explode('.', $column)) - 1)) {
+                                    $serachColumn = $single_column;
+                                    break;
+                                }
+                                $relation .= $single_column;
+                                if ($k != (count(explode('.', $column)) - 2))
+                                    $relation .= '.';
+                            }
+                            $q->whereHas($relation, function ($r) use ($serachColumn, $operator, $value) {
+                                $r->whereDate($serachColumn, optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                            });
+                        } else {
+                            $q->whereHas(explode('.', $column)[0], function ($r) use ($column, $operator, $value) {
+                                $r->whereDate(explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                            });
+                        }
+                    } else
+                        $q->whereDate($column, optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
                 } catch (Exception $e) {
                     if ($operator == 'is') {
                         if ($value == 'NULL') {
@@ -26,19 +48,19 @@ if (!function_exists('filterData')) {
                             $q->whereNotNull($column);
                         }
                     } else {
-                        if (strpos($column, '.') !== false) {
-                            if ($operator == 'l')
-                                $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
-                            else {
-                                if ($value)
+                        if ($value) {
+                            if (strpos($column, '.') !== false) {
+                                if ($operator == 'l') {
+                                    $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
+                                } else {
                                     $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
-                            }
-                        } else {
-                            if ($operator == 'l')
-                                $q->where($column, optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
-                            else {
-                                if ($value)
+                                }
+                            } else {
+                                if ($operator == 'l')
+                                    $q->where($column, optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
+                                else {
                                     $q->where($column, optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                                }
                             }
                         }
                     }

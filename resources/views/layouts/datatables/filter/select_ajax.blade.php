@@ -1,4 +1,4 @@
-<select class="datatable-filter datatable-filter-select-ajax form-control" name="{{ $name }}"
+<select class="datatable-filter-select-ajax form-control" name="{{ $name }}"
     data-target="datatable-filter" style="width: 100%">
 </select>
 @once
