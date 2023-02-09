@@ -49,11 +49,45 @@ if (!function_exists('filterData')) {
                         }
                     } else {
                         if ($value) {
+                            // if (strpos($column, '.') !== false) {
+                            //     if ($operator == 'l') {
+                            //         $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
+                            //     } else {
+                            //         $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                            //     }
+                            // }
                             if (strpos($column, '.') !== false) {
-                                if ($operator == 'l') {
-                                    $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
+                                if (count(explode('.', $column)) > 2) {
+                                    $relation = '';
+                                    $serachColumn = '';
+                                    foreach (explode('.', $column) as $k => $single_column) {
+                                        if ($k == (count(explode('.', $column)) - 1)) {
+                                            $serachColumn = $single_column;
+                                            break;
+                                        }
+                                        $relation .= $single_column;
+                                        if ($k != (count(explode('.', $column)) - 2))
+                                            $relation .= '.';
+                                    }
+                                    if ($operator == 'l') {
+                                        $q->whereHas($relation, function ($r) use ($serachColumn, $operator, $value) {
+                                            $r->where($serachColumn, optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
+                                        });
+                                    } else {
+                                        $q->whereHas($relation, function ($r) use ($serachColumn, $operator, $value) {
+                                            $r->where($serachColumn, optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                                        });
+                                    }
                                 } else {
-                                    $q->whereRelation(explode('.', $column)[0], explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                                    if ($operator == 'l') {
+                                        $q->whereHas(explode('.', $column)[0], function ($r) use ($column, $operator, $value) {
+                                            $r->where(explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator], '%' . $value . '%');
+                                        });
+                                    } else {
+                                        $q->whereHas(explode('.', $column)[0], function ($r) use ($column, $operator, $value) {
+                                            $r->where(explode('.', $column)[1], optional(BaseModel::OPERATORS)[$operator] ?? '=', $value);
+                                        });
+                                    }
                                 }
                             } else {
                                 if ($operator == 'l')
