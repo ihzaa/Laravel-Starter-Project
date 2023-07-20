@@ -1,9 +1,11 @@
-<li class="nav-main-item">
-    <a class="nav-main-link {{ strpos(Route::current()->getName(), 'admin.dashboard.') !== false ? 'active' : '' }}"
-        href="{{ route('admin.dashboard.index') }}">
-        <i class="nav-main-link-icon si si-speedometer"></i>
-        <span class="nav-main-link-name">Dashboard</span>
-    </a>
-</li>
+@php
+    $main_menu = App\Utils\MenuGenerator::generateMenu();
+@endphp
 
-@include('layouts.parts.sidebar_components.admin.pengaturan_user')
+@foreach ($main_menu as $menu)
+    @if (!$menu->hasChildren())
+        @include('layouts.parts.sidebar_components.admin.nav-item', ['item' => $menu])
+    @else
+        @include('layouts.parts.sidebar_components.admin.sub_menu', ['item' => $menu])
+    @endif
+@endforeach

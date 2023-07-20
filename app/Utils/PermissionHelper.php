@@ -26,6 +26,7 @@ class PermissionHelper
         'Pengaturan_User' => [
             'Pengaturan_User_Perizinan',
             'Pengaturan_User_User',
+            // ini contoh
             [
                 'name' => 'pengaturan_user_test',
                 'alias' => 'User Testtt',
@@ -33,6 +34,7 @@ class PermissionHelper
                 'description' => 'Ini testing aja'
             ]
         ],
+        // ini contoh
         'master' => [
             [
                 'name' => 'master_apagitu'
