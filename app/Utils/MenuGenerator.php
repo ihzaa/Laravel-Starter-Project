@@ -14,23 +14,26 @@ class MenuGenerator
                 ->data('prefix_route_name', 'admin.dashboard.')
                 ->data('icon', 'si si-speedometer');
 
-            // Pengaturan User Start
+            // Pengaturan User Start <<<<<
+            // add parent menu
             $menu
                 ->add('Pengaturan User')
                 ->nickname('pengaturan_user')
                 ->data('prefix_route_name', 'admin.user_config.')
                 ->data('icon', 'fa fa-user-cog');
+            // add sub menu
             $menu
                 ->pengaturan_user
                 ->add('Perizinan', route('admin.user_config.permission.index'))
                 ->data('prefix_route_name', 'admin.user_config.permission.')
                 ->data('permission', 'view Pengaturan_User_Perizinan');
+            // add sub menu
             $menu
                 ->pengaturan_user
                 ->add('User', route('admin.user_config.user.index'))
                 ->data('prefix_route_name', 'admin.user_config.user.')
                 ->data('permission', 'view Pengaturan_User_User');
-            // Pengaturan User End
+            // Pengaturan User End <<<<<
 
         })->filter(function ($item) {
             if ($item->hasParent()) {
