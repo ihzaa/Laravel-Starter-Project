@@ -94,7 +94,7 @@ class PermissionController extends Controller
     public function createGet()
     {
         $data['longest_actions'] = count(PermissionHelper::ACTIONS);
-        $permissions = PermissionHelper::PERMISSIONS;
+        $permissions = PermissionHelper::getPermission();
         foreach ($permissions as $permission) {
             foreach ($permission as $permission_name) {
                 if (gettype($permission_name) === 'array') {

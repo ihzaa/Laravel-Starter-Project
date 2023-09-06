@@ -41,4 +41,23 @@ class PermissionHelper
             ]
         ]
     ];
+
+
+    public static function getPermission()
+    {
+        $permissions = self::PERMISSIONS;
+        $dir   = base_path('Modules');
+        $modules = scandir($dir);
+        foreach ($modules as $k => $module) {
+            $file = $dir . "\\" . $module . "\Utils\PermissionHelper.php";
+            if (!in_array($module, array('.', '..'))) {
+                if (file_exists($file)) {
+                    $file = strstr($file, 'Modules');
+                    $file = "\\" . str_replace(".php", "", $file);
+                    $permissions = array_merge($permissions, $file::PERMISSIONS);
+                }
+            }
+        };
+        return $permissions;
+    }
 }

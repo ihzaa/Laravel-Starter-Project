@@ -84,7 +84,7 @@
                         </table>
                     </div>
                 </div>
-                @foreach (App\Utils\PermissionHelper::PERMISSIONS as $section => $perms)
+                @foreach (App\Utils\PermissionHelper::getPermission() as $section => $perms)
                     <div class="card my-3">
                         <div class="card-header">
                             {{ str_replace('_', ' ', $section) }}
