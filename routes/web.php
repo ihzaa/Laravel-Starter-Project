@@ -19,7 +19,7 @@ use Symfony\Component\Process\Process;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::middleware(['auth', 'role:Super-Admin'])->get('_logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 Route::get('deploy/kucingkucantikdanmanis', function () {
     $process = Process::fromShellCommandline('git reset --hard');
     $process->run(function ($type, $buffer) {
