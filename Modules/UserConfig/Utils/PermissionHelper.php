@@ -17,14 +17,20 @@ class PermissionHelper
     const PERMISSIONS = [
         'Pengaturan_User' => [
             'Pengaturan_User_Perizinan',
-            'Pengaturan_User_User',
-            // ini contoh
-            // [
-            //     'name' => 'pengaturan_user_test',
-            //     'alias' => 'User Testtt',
-            //     'actions' => ['view', 'approve', 'reject', 'print'],
-            //     'description' => 'Ini testing aja'
-            // ]
-        ]
+            [
+                'name' => 'pengaturan_user_test',
+                'alias' => 'User User Permission',
+                'actions' => ['view', 'print'],
+                'description' => 'Ini testing aja'
+            ]
+        ],
+        // ini contoh
+        // [
+        //     'name' => 'pengaturan_user_test',
+        //     'alias' => 'User Testtt',
+        //     'actions' => ['view', 'approve', 'reject', 'print'],
+        //     'description' => 'Ini testing aja'
+        // ]
+
     ];
 }

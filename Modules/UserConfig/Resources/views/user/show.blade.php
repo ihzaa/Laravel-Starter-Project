@@ -63,13 +63,13 @@
                         </div>
                         <div class="form-group">
                             <label for="role">Peran User <span class="text-danger">*</span></label>
-                            <select class="form-control" id="role" name="role">
+                            <select class="form-control select2" id="role" name="role[]" multiple>
                                 <option value="" disabled @if (count($data['user_role']) == 0) selected @endif>Pilih
                                     Peran
                                     User...</option>
                                 @foreach ($data['roles'] as $k => $v)
                                     <option value="{{ $k }}"
-                                        @if (count($data['user_role']) > 0) @if ($data['user_role'][0] == $v) selected @endif
+                                        @if (count($data['user_role']) > 0) @if (in_array($k, $data['user_role'])) selected @endif
                                         @endif>
                                         {{ $v }}</option>
                                 @endforeach
@@ -113,3 +113,10 @@
     </div>
     @include('layouts.general_informations.userResponsibleStamp', ['data' => $data['obj']])
 @endsection
+
+@include('layouts.select2.init')
+@push('scripts')
+    <script>
+        $('.select2').select2();
+    </script>
+@endpush

@@ -97,7 +97,7 @@ class UserController extends Controller
     {
         $data['obj'] = User::withTrashed()->find($id);
         $data['roles'] = Role::pluck('name', 'id');
-        $data['user_role'] = $data['obj']->getRoleNames();
+        $data['user_role'] = $data['obj']->roles()->pluck('id')->toArray();
         $data['user_type'] = User::user_type;
         return view('userconfig::user.show', compact('data'));
     }
@@ -126,7 +126,6 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
         DB::table('model_has_roles')->where('model_id', $id)->delete();
-
         $user->assignRole($request->input('role'));
         $user->save();
 

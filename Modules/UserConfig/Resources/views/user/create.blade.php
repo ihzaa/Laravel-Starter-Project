@@ -60,8 +60,8 @@
                         </div>
                         <div class="form-group">
                             <label for="role">Peran User <span class="text-danger">*</span></label>
-                            <select class="form-control" id="role" name="role">
-                                <option value="">Pilih Peran User...</option>
+                            <select class="form-control select2" id="role" name="role[]" multiple>
+                                <option value="" disabled>Pilih Peran User...</option>
                                 @foreach ($data['roles'] as $role)
                                     <option value="{{ $role->id }}" {{ old('role') == $role->id ? 'selected' : '' }}>
                                         {{ $role->name }}</option>
@@ -77,3 +77,9 @@
         </div>
     </div>
 @endsection
+@include('layouts.select2.init')
+@push('scripts')
+    <script>
+        $('.select2').select2();
+    </script>
+@endpush
