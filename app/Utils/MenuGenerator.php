@@ -32,7 +32,7 @@ class MenuGenerator
                 ->pengaturan_user
                 ->add('User', route('admin.user_config.user.index'))
                 ->data('prefix_route_name', 'admin.user_config.user.')
-                ->data('permission', 'view Pengaturan_User_User');
+                ->data('permission', 'view user_config.user');
             // Pengaturan User End <<<<<
 
         })->filter(function ($item) {

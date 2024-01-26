@@ -10,7 +10,7 @@ class PermissionHelper
     ];
 
     const ACTIONS = [
-        'view', 'create', 'update', 'delete', 'restore'
+        'view', 'create', 'update', 'delete'
     ];
     /**
      * Permission rule:
@@ -24,11 +24,11 @@ class PermissionHelper
      */
     const PERMISSIONS = [
         // ini contoh
-        'master' => [
-            [
-                'name' => 'master_apagitu'
-            ]
-        ]
+        // 'master' => [
+        //     [
+        //         'name' => 'master_apagitu'
+        //     ]
+        // ]
     ];
 
 

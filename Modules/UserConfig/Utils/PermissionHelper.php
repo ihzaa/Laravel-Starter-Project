@@ -16,13 +16,8 @@ class PermissionHelper
      */
     const PERMISSIONS = [
         'Pengaturan_User' => [
-            'Pengaturan_User_Perizinan',
-            [
-                'name' => 'pengaturan_user_test',
-                'alias' => 'User User Permission',
-                'actions' => ['view', 'print'],
-                'description' => 'Ini testing aja'
-            ]
+            'user_config.role',
+            'user_config.user'
         ],
         // ini contoh
         // [

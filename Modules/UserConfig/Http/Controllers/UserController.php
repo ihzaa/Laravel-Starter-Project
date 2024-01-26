@@ -2,7 +2,7 @@
 
 namespace Modules\UserConfig\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Models\User;
 use App\Rules\Password;
 use App\Utils\FlashMessageHelper;
@@ -12,151 +12,131 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Modules\UserConfig\Http\Requests\User\StoreRequest;
+use Modules\UserConfig\Http\Requests\User\UpdateRequest;
+use Modules\UserConfig\Repositories\UserRepository;
 use Spatie\Permission\Models\Role;
+use stdClass;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
-    public function index(Request $request)
+    protected $user_repository;
+    public function __construct(UserRepository $user_repository)
     {
-        if ($request->ajax()) {
-            $validated = $request->validate([
-                'name' => 'nullable|array',
-                'email' => 'nullable|array',
-                'created_at' => 'nullable|array',
-                'created_at.*' => 'nullable|date_format:d-m-Y',
-                'deleted_at' => 'nullable|array'
-            ]);
-            $query = User::when($validated != [], function ($q) use ($validated) {
-                filterData($q, $validated);
-            });
-            return datatables()->of($query)
-                ->addColumn('status', function ($obj) {
-                    if ($obj->trashed()) {
-                        return 'Dihapus';
-                    } else {
-                        return 'Aktif';
-                    }
-                })
-                ->addColumn('action', function ($obj) {
-                    return '<a class="btn btn-sm btn-success" href="' . route('admin.user_config.user.show', ['id' => $obj->id]) . '" data-toggle="tooltip" data-placement="top" title="Lihat Detail"><i class="far fa-eye"></i></a>';
-                })
-                ->editColumn('created_at', function ($data) {
-                    return Carbon::parse($data->created_at)->format('d-m-Y');
-                })
-                ->make(true);
-        }
+        $this->route = 'admin.user_config.user.';
+        $this->view = 'userconfig::user.';
+        $this->permission = 'user_config.user';
+        $this->user_repository = $user_repository;
+        $this->user_repository->setProperty($this->getPropertyToRepository());
+    }
+
+    public function index()
+    {
         $data['model'] = User::class;
-        return view('userconfig::user.index', compact('data'));
+        return $this->view('index', $data);
+    }
+
+    public function datatable(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'nullable|array',
+            'email' => 'nullable|array',
+            'created_at' => 'nullable|array',
+            'created_at.*' => 'nullable|date_format:d-m-Y',
+            'deleted_at' => 'nullable|array'
+        ]);
+        $query = $this->user_repository->getData($validated);
+        return datatables()->of($query)
+            ->addColumn('status', function ($obj) {
+                if ($obj->trashed()) {
+                    return 'Dihapus';
+                } else {
+                    return 'Aktif';
+                }
+            })
+            ->addColumn('action', function ($obj) {
+                $button = '<a class="px-1 text-success" href="' . route($this->route . 'show', ['id' => $obj->id]) . '" data-toggle="tooltip" data-placement="top" title="Lihat Detail"><i class="far fa-eye"></i></a>';
+                // if user can update
+                if (auth()->user()->can('update ' . $this->permission)) {
+                    $button .= '<a class="px-1 text-info" href="' . route($this->route . 'edit', ['id' => $obj->id]) . '" data-toggle="tooltip" data-placement="top" title="Edit"><i class="far fa-edit"></i></a>';
+                }
+                // if user can delete
+                if (auth()->user()->can('update ' . $this->permission)) {
+                    $button .= '<a class="px-1 text-danger btn-delete-item-datatable" data-datatable-id="main-table" href="' . route($this->route . 'delete', ['id' => $obj->id]) . '" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></a>';
+                }
+
+                return $button;
+            })
+            ->editColumn('created_at', function ($obj) {
+                return $obj->carbon_date('created_at')->format('d-m-Y');
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     public function createGet()
     {
         $data['roles'] = Role::get();
         $data['user_type'] = User::user_type;
-        return view('userconfig::user.create', compact('data'));
+        return $this->view('create', $data);
     }
 
-    public function createPost(Request $request)
+    public function createPost(StoreRequest $request)
     {
-        $validate = ValidationHelper::validate($request, [
-            'name' => 'required',
-            'username' => 'required|unique:' . User::getTableName(),
-            'email' => 'required|email|unique:' . User::getTableName(),
-            'password' => [
-                'required', 'min:8',
-                Password::min(8)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-            ],
-            'role' => 'required',
-            'user_type' => 'required'
-        ], ['min' => ':attribute Minimal terdiri dari :min karakter'], [
-            'name' => 'nama',
-            'role' => 'peran',
-            'user_type' => 'Tipe User'
-        ]);
+        $validated = $request->validated();
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->user_type = $request->user_type;
-
-        $role = Role::find($request->role);
-        $user->assignRole($role);
-        $user->save();
+        $data = $this->user_repository->storeByRequest($validated);
 
         FlashMessageHelper::bootstrapSuccessAlert('User ' . $request->name . ' berhasil ditambahkan!', 'Berhasil!');
-
-        return redirect(route('admin.user_config.user.index'));
+        return redirect(route($this->route . 'show', ['id' => $data->id]));
     }
 
     public function show($id)
     {
-        $data['obj'] = User::withTrashed()->find($id);
-        $data['roles'] = Role::pluck('name', 'id');
-        $data['user_role'] = $data['obj']->roles()->pluck('id')->toArray();
+        $data['obj'] = $this->user_repository->find($id);
+        $data['roles'] = Role::get();
+        $data['user_role'] = $this->user_repository->getUserRolesIds($id);
         $data['user_type'] = User::user_type;
-        return view('userconfig::user.show', compact('data'));
+        return $this->view('show', $data);
     }
 
-    public function update($id, Request $request)
+    public function edit($id)
     {
-        $user = User::find($id);
-        $validate = ValidationHelper::validate($request, [
-            'name' => 'required',
-            'email' => ['required', Rule::unique(User::getTableName())->ignore($user)],
-            'password' => [
-                'nullable', 'min:8',
-                Password::min(8)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-            ],
-            'role' => 'required',
-            'user_type' => 'required'
-        ], ['min' => ':attribute Minimal terdiri dari :min karakter'], ['name' => 'nama', 'role' => 'peran', 'user_type' => 'Tipe User']);
+        $data['obj'] = $this->user_repository->find($id);
+        $data['roles'] = Role::get();
+        $data['user_role'] = $this->user_repository->getUserRolesIds($id);
+        $data['user_type'] = User::user_type;
+        return $this->view('edit', $data);
+    }
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->user_type = $request->user_type;
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
-        DB::table('model_has_roles')->where('model_id', $id)->delete();
-        $user->assignRole($request->input('role'));
-        $user->save();
+    public function update($id, UpdateRequest $request)
+    {
+        $validated = $request->validated();
+        $this->user_repository->updateByRequest($id, $validated);
 
         FlashMessageHelper::bootstrapSuccessAlert('User ' . $request->name . ' berhasil diubah!', 'Berhasil!');
-
-        return back();
+        return redirect(route($this->route . 'show', ['id' => $id]));
     }
 
     public function delete($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $this->user_repository->deleteById($id);
 
-        FlashMessageHelper::bootstrapSuccessAlert('User ' . $user->name . ' berhasil dihapus!');
-
-        return redirect(route('admin.user_config.user.index'));
+        return response()->json(['status' => true,'message' => 'Berhasil Hapus Data!']);
     }
 
     public function restore($id)
     {
-        $user = User::onlyTrashed()->where('id', $id)->first();
-        $user->restore();
+        $this->user_repository->restoreById($id);
 
-        FlashMessageHelper::bootstrapSuccessAlert('User ' . $user->name . ' berhasil dikembalikan!');
+        FlashMessageHelper::bootstrapSuccessAlert('User berhasil dikembalikan!');
 
-        return redirect(route('admin.user_config.user.show', ['id' => $id]));
+        return redirect(route($this->route . 'show', ['id' => $id]));
     }
 
     public function loginAsUser($id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->user_repository->find($id);
         // logout
         auth()->logout();
         // login sebagai user yg dipilih

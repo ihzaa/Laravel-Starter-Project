@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" id="css-main" href="{{ asset('oneUI') }}/css/oneui.min.css">
     <link rel="stylesheet" id="css-main" href="{{ asset('oneUI') }}/css/custom.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.min.css">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/loadingio/ldbutton@v1.0.1/dist/ldbtn.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
@@ -103,7 +103,7 @@
                                 class="d-block d-sm-inline-block mt-2 mt-sm-0 font-size-base font-w400 text-muted">@yield('page_sub_title')</small>
                         </h1>
                         <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
-                            @yield("breadcrumb")
+                            @yield('breadcrumb')
                         </nav>
                     </div>
                 </div>
@@ -125,8 +125,7 @@
             <div class="content py-3">
                 <div class="row font-size-sm">
                     <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-right">
-                        Develop by <a class="font-w600" href="https://1.envato.market/ydb"
-                            target="_blank">TeamRS</a>
+                        Develop by <a class="font-w600" href="https://1.envato.market/ydb" target="_blank">TeamRS</a>
                     </div>
                     <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-left">
                         <a class="font-w600" href="https://1.envato.market/AVD6j" target="_blank">OneUI 4.8</a>
@@ -142,9 +141,13 @@
     <script src="{{ asset('oneUI') }}/js/oneui.app.min.js"></script>
     {{-- <script src="{{ asset('oneUI') }}/js/custom.js"></script> --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
-
+    <script>
+        $('body').tooltip({
+            selector: '[data-toggle="tooltip"]'
+        });
+    </script>
     @include('layouts.alerts.alert')
     @include('layouts.alerts.input-invalid')
     @include('layouts.parts.loader')
