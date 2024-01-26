@@ -39,9 +39,7 @@
             <!-- main item -->
             <ul class="nav-main">
                 {{-- Sidebar Admin --}}
-                @if (auth()->user()->user_type == 1)
-                    @include('layouts.parts.sidebar_components.admin.index')
-                @endif
+                @include('layouts.parts.sidebar_components.admin.index')
                 {{-- Sidebar Admin END --}}
 
                 {{-- SETERUSNYA --}}

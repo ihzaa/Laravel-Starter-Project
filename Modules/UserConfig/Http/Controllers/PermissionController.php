@@ -16,22 +16,21 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        return view('userconfig::permission.index');
-    }
+        if (request()->ajax()) {
+            $query = Role::orderBy('name');
+            return datatables()->of($query)
+                ->addColumn('action', function ($data) {
+                    if ($data->id == 1)
+                        return 'Memiliki semua izin.';
+                    return '<a class="btn btn-sm btn-success" href="' . route('admin.user_config.role.show', [$data->id]) . '" data-toggle="tooltip" data-placement="top" title="Lihat Detail"><i class="far fa-eye"></i></a>';
+                })
+                ->editColumn('created_at', function ($data) {
+                    return Carbon::parse($data->created_at)->format('d-m-Y');
+                })
+                ->make(true);
+        }
 
-    public function datatable()
-    {
-        $query = Role::orderBy('name');
-        return datatables()->of($query)
-            ->addColumn('action', function ($data) {
-                if ($data->id == 1)
-                    return 'Memiliki semua izin.';
-                return '<a class="btn btn-sm btn-success" href="' . route('admin.user_config.role.show', [$data->id]) . '" data-toggle="tooltip" data-placement="top" title="Lihat Detail"><i class="far fa-eye"></i></a>';
-            })
-            ->editColumn('created_at', function ($data) {
-                return Carbon::parse($data->created_at)->format('d-m-Y');
-            })
-            ->make(true);
+        return view('userconfig::permission.index');
     }
 
     public function show($id)

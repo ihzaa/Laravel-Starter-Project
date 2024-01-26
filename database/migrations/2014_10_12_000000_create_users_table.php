@@ -24,11 +24,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->longText('refresh_token')->nullable();
-            $table->char('user_type', '2')->default('1');
-            $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('updated_by');
-            $table->unsignedBigInteger('deleted_by');
-            $table->unsignedBigInteger('restored_by');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
+            $table->unsignedBigInteger('restored_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->dateTime('restored_at')->nullable();
