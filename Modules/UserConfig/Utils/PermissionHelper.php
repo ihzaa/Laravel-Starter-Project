@@ -16,8 +16,18 @@ class PermissionHelper
      */
     const PERMISSIONS = [
         'Pengaturan_User' => [
-            'user_config.role',
-            'user_config.user'
+            [
+                'name' => 'user_config.role',
+                'alias' => 'Pengaturan User Role',
+                'actions' => ['view', 'create', 'update', 'delete'],
+                'description' => 'Pengaturan User Role'
+            ],
+            [
+                'name' => 'user_config.user',
+                'alias' => 'Pengaturan User User',
+                'actions' => ['view', 'create', 'update', 'delete', 'restore'],
+                'description' => 'Pengaturan User User'
+            ],
         ],
         // ini contoh
         // [

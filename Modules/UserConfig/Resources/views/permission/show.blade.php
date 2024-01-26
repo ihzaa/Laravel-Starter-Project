@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     @php
-        $breadcrumbs = ['Pengaturan User', ['Perizinan', route('admin.user_config.permission.index')], 'Lihat'];
+        $breadcrumbs = ['Pengaturan User', ['Perizinan', route('admin.user_config.role.index')], 'Lihat'];
     @endphp
     @include('layouts.parts.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 @endsection
@@ -14,7 +14,7 @@
 @endpush
 
 @section('content')
-    <form action="{{ route('admin.user_config.permission.update', [$data['role']->id]) }}" method="POST">
+    <form action="{{ route('admin.user_config.role.update', [$data['role']->id]) }}" method="POST">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -163,15 +163,15 @@
                     </div>
                 @endforeach
             </div>
-            @can('update Pengaturan_User_Perizinan')
+            @can('update user_config.role')
                 <button class="btn btn-primary ml-auto mr-2" type="submit"><i class="fa fa-check" aria-hidden="true"></i>
                     Simpan</button>
             @endcan
 
-            @can('delete Pengaturan_User_Perizinan')
+            @can('delete user_config.role')
                 @if ($data['role']->id != 2)
                     <a class="btn btn-danger mr-auto" onclick="return confirm('Yakin menghapus?')"
-                        href="{{ route('admin.user_config.permission.delete', ['id' => $data['role']->id]) }}"><i
+                        href="{{ route('admin.user_config.role.delete', ['id' => $data['role']->id]) }}"><i
                             class="fa fa-trash" aria-hidden="true"></i>
                         Hapus</a>
                 @endif

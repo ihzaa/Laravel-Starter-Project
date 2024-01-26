@@ -24,9 +24,9 @@ class MenuGenerator
             // add sub menu
             $menu
                 ->pengaturan_user
-                ->add('Perizinan', route('admin.user_config.permission.index'))
-                ->data('prefix_route_name', 'admin.user_config.permission.')
-                ->data('permission', 'view Pengaturan_User_Perizinan');
+                ->add('Perizinan', route('admin.user_config.role.index'))
+                ->data('prefix_route_name', 'admin.user_config.role.')
+                ->data('permission', 'view user_config.role');
             // add sub menu
             $menu
                 ->pengaturan_user

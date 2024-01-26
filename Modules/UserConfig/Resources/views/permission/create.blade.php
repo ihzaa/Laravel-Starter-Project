@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     @php
-        $breadcrumbs = ['Pengaturan User', ['Perizinan', route('admin.user_config.permission.index')], 'Tambah'];
+        $breadcrumbs = ['Pengaturan User', ['Perizinan', route('admin.user_config.role.index')], 'Tambah'];
     @endphp
     @include('layouts.parts.breadcrumb', ['breadcrumbs' => $breadcrumbs])
 @endsection
@@ -14,7 +14,7 @@
 @endpush
 
 @section('content')
-    <form action="{{ route('admin.user_config.permission.createPost') }}" method="POST">
+    <form action="{{ route('admin.user_config.role.createPost') }}" method="POST">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

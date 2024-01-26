@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Modules\UserConfig\Http\Controllers\PermissionController;
 
-$permission = 'Pengaturan_User_Perizinan';
+$permission = 'user_config.role';
 
-Route::prefix('admin/user_config')->name('admin.user_config.')->middleware(['auth', 'user_type:Admin'])->group(function () use ($permission) {
-    Route::prefix('permission')->name('permission.')->group(function () use ($permission) {
+Route::prefix('admin/user_config')->name('admin.user_config.')->middleware(['auth'])->group(function () use ($permission) {
+    Route::prefix('permission')->name('role.')->group(function () use ($permission) {
         Route::middleware(['permission:view ' . $permission])->group(function () {
             Route::get('/', [PermissionController::class, 'index'])->name('index');
             Route::get('show/{id}', [PermissionController::class, 'show'])->name('show');

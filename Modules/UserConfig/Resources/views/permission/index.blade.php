@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     @php
-    $breadcrumbs = ['Pengaturan User', ['Perizinan', route('admin.user_config.permission.index')]];
+    $breadcrumbs = ['Pengaturan User', ['Perizinan', route('admin.user_config.role.index')]];
     @endphp
     @include('layouts.parts.breadcrumb',['breadcrumbs'=>$breadcrumbs])
 @endsection
@@ -15,8 +15,8 @@
             <div class="card bg-secondary-300">
                 <div class="card-header d-flex">
                     <h3 class="card-title mr-auto">List Peran</h3>
-                    @can('create Pengaturan_User_Perizinan')
-                        <a class="btn btn-primary" href="{{ route('admin.user_config.permission.createGet') }}"><i
+                    @can('create user_config.role')
+                        <a class="btn btn-primary" href="{{ route('admin.user_config.role.createGet') }}"><i
                                 class="fa fa-plus" aria-hidden="true"></i> Tambah</a>
                     @endcan
                 </div>

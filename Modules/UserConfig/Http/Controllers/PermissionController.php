@@ -16,21 +16,22 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        if (request()->ajax()) {
-            $query = Role::orderBy('name');
-            return datatables()->of($query)
-                ->addColumn('action', function ($data) {
-                    if ($data->id == 1)
-                        return 'Memiliki semua izin.';
-                    return '<a class="btn btn-sm btn-success" href="' . route('admin.user_config.permission.show', [$data->id]) . '" data-toggle="tooltip" data-placement="top" title="Lihat Detail"><i class="far fa-eye"></i></a>';
-                })
-                ->editColumn('created_at', function ($data) {
-                    return Carbon::parse($data->created_at)->format('d-m-Y');
-                })
-                ->make(true);
-        }
-
         return view('userconfig::permission.index');
+    }
+
+    public function datatable()
+    {
+        $query = Role::orderBy('name');
+        return datatables()->of($query)
+            ->addColumn('action', function ($data) {
+                if ($data->id == 1)
+                    return 'Memiliki semua izin.';
+                return '<a class="btn btn-sm btn-success" href="' . route('admin.user_config.role.show', [$data->id]) . '" data-toggle="tooltip" data-placement="top" title="Lihat Detail"><i class="far fa-eye"></i></a>';
+            })
+            ->editColumn('created_at', function ($data) {
+                return Carbon::parse($data->created_at)->format('d-m-Y');
+            })
+            ->make(true);
     }
 
     public function show($id)
@@ -79,7 +80,7 @@ class PermissionController extends Controller
 
         FlashMessageHelper::bootstrapSuccessAlert('Berhasil merubah perizian ' . $request->name . '!');
 
-        return redirect(route('admin.user_config.permission.show', ['id' => $id]));
+        return redirect(route('admin.user_config.role.show', ['id' => $id]));
     }
 
     public function delete($id)
@@ -88,7 +89,7 @@ class PermissionController extends Controller
         $name = $role->name;
         $role->delete();
         FlashMessageHelper::alert(['class' => 'alert-success', 'icon' => 'trash', 'text' => 'Berhasil menghapus perizinan ' . $name . '!']);
-        return redirect(route('admin.user_config.permission.index'));
+        return redirect(route('admin.user_config.role.index'));
     }
 
     public function createGet()
@@ -147,6 +148,6 @@ class PermissionController extends Controller
 
         FlashMessageHelper::bootstrapSuccessAlert('Berhasil menambahkan perizian ' . $request->name . '!');
 
-        return redirect(route('admin.user_config.permission.show', ['id' => $role->id]));
+        return redirect(route('admin.user_config.role.show', ['id' => $role->id]));
     }
 }
