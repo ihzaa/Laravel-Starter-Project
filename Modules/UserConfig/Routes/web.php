@@ -1,20 +1,24 @@
 <?php
 
-// supaya rapi
+$dir = module_path('UserConfig', 'Routes/web');
 
-$dir   = base_path('Modules\UserConfig\Routes\web');
+if (!is_dir($dir)) {
+    return;
+}
 
-#Scan File To Dir
 $files = scandir($dir);
 $dirs = [];
-foreach ($files as $k => $file) {
-    if (!in_array($file, array('index.php')) && strpos($file, '.php') !== false) {
-        require $dir . '/' . $file;
+
+foreach ($files as $file) {
+    if (!in_array($file, ['index.php', '.', '..'], true) && str_ends_with($file, '.php')) {
+        require $dir.'/'.$file;
     }
-    if (!in_array($file, array('.', '..')) && strpos($file, '.php') === false) {
-        array_push($dirs, $file);
+
+    if (!in_array($file, ['.', '..'], true) && !str_ends_with($file, '.php')) {
+        $dirs[] = $file;
     }
-};
-if ($dirs != []) {
+}
+
+if ($dirs !== []) {
     readSubDir($dir, $dirs);
 }

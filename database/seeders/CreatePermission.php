@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Utils\PermissionHelper;
 use Spatie\Permission\Models\Permission;
 
-class createPermission
+class CreatePermission
 {
     public static function create($permission)
     {

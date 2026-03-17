@@ -1,0 +1,50 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/frankenphp/Dockerfile
+      target: production
+    image: laravel-starter-frankenphp:prod
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${APP_PORT:-8080}:80"
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      APP_DEBUG: ${APP_DEBUG:-false}
+      APP_URL: ${APP_URL:-https://your-domain.com}
+      LOG_CHANNEL: ${LOG_CHANNEL:-stderr}
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: ${DB_PORT:-5432}
+      DB_DATABASE: ${DB_DATABASE:-laravel_starter_project}
+      DB_USERNAME: ${DB_USERNAME:-laravel}
+      DB_PASSWORD: ${DB_PASSWORD:-secret}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - app-storage:/app/storage
+      - app-cache:/app/bootstrap/cache
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    command: ["postgres", "-p", "${DB_PORT:-5432}"]
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-laravel_starter_project}
+      POSTGRES_USER: ${DB_USERNAME:-laravel}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-laravel} -d ${DB_DATABASE:-laravel_starter_project} -p ${DB_PORT:-5432}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  app-storage:
+  app-cache:
+  postgres-data:

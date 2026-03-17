@@ -24,22 +24,9 @@ class PermissionRoleUserSeeder extends Seeder
             'name' => 'SuperAdmin',
             'username' => 'superadmin',
             'email' => 'superadmin@example.com',
+            // password 123
         ]);
         $user->assignRole($role3);
-        // create permissions
-        // CreatePermission::create('users');
-
-        // create roles and assign existing permissions
-        // $role1 = Role::create(['name' => 'admin']);
-        // $role1->givePermissionTo('create users');
-        // $role1->givePermissionTo('update users');
-        // $role1->givePermissionTo('delete users');
-        // $role1->givePermissionTo('view users');
-        // $role1->givePermissionTo('restore users');
-
-        // CreatePermission::create('permissions');
-
-        // In login method check the loged-in user Role
     }
 
 
